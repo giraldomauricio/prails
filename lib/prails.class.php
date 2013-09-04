@@ -18,6 +18,10 @@ class prails {
   var $_id = "";
   var $_data_set;
   
+  var $_controller = "";
+  var $_action = "";
+  var $_view = "";
+  
   public function Render()
   {
     return $this->_html;

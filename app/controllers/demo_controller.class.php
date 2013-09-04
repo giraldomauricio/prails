@@ -6,6 +6,10 @@
  */
 class demo_controller extends demo_model{
   //put your code here
+
+  public function __construct() {
+    
+  }
   
   public function demo_action()
   {

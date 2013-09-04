@@ -11,8 +11,7 @@ $init->AnalizeAndProcessRoutes();
 // 2) Execute the method in the controller described by the action/view pair
 // 3) Either render the view, render here the result or redirect
 // $controller = new $controller;
-
-$controller = new $mvccontroller;
-$controller->$action;
-
+$controller = $init->controller;
+$action = $init->action;
+$actual = $core->$action();
 ?>
