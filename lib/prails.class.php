@@ -22,6 +22,12 @@ class prails {
   var $_action = "";
   var $_view = "";
   
+  public function index()
+  {
+  $this->_html = "Welcome to Prails";
+  }
+
+
   public function Render()
   {
     return $this->_html;

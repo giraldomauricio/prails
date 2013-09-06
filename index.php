@@ -1,5 +1,6 @@
 <?php
 // Prails v.0.1
+require 'bootstrapper.php';
 // Routing file
 // This file handles all the requests received and routes
 // the calls acordingly.
@@ -12,6 +13,8 @@ $init->AnalizeAndProcessRoutes();
 // 3) Either render the view, render here the result or redirect
 // $controller = new $controller;
 $controller = $init->controller;
+$controller_instance = new $controller();
 $action = $init->action;
-$actual = $core->$action();
+$controller_instance->$action();
+print $controller_instance->_html;
 ?>

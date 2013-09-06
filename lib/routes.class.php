@@ -19,8 +19,10 @@ class Routes {
   public function AnalizeAndProcessRoutes() {
     $initial_query_string = $_SERVER["QUERY_STRING"];
     $request = explode("/", $initial_query_string);
-    $this->controller = $request[0];
-    $this->action = $request[1];
+    if ($request[0]) $this->controller = $request[0];
+    else $this->controller = "prails";
+    if($request[1]) $this->action = $request[1];
+    else $this->action = "index";
     if($request[2]) $this->query_string = $this->GetQueryString($request[2]);
   }
 
