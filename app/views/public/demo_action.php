@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <th>
+      <td>Id</td>
+      <td>Name</td>
+    </th>
+  </thead>
+  <tbody>
+    {start_repeat}
+    <tr>
+      <td>{id}</td>
+      <td>{name}</td>
+    </tr>
+    {end_repeat}
+  </tbody>
+</table>

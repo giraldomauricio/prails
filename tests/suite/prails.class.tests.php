@@ -16,5 +16,16 @@ $newcore = new $controller();
 $newcore->LoadFixture("demo_fixture.php");
 $actual = $newcore->$action();
 $test->AssertEqual($actual, "Some name", "Test dinamic action instance");
-
+$html = "<div>{start_repeat}Foo{end_repeat}</div>";
+$extraction = $core->ProcessRepeat($html);
+$test->AssertEqual($extraction,"Foo","Test repeat extraction");
+$html = "<div>{start_repeat}Foo</div>";
+$extraction = $core->ProcessRepeat($html);
+$test->AssertEqual($extraction,$html,"Test repeat extraction bad repeat");
+$html = "{start_repeat}Foo{end_repeat}";
+$extraction = $core->ProcessRepeat($html);
+$test->AssertEqual($extraction,"Foo","Test repeat extraction beginning");
+$html = "start_repeat}Foo{end_repeat}";
+$extraction = $core->ProcessRepeat($html);
+$test->AssertEqual($extraction,$html,"Test repeat extraction beginning bad");
 ?>

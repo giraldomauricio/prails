@@ -28,7 +28,7 @@ class prails {
     $this->_html = "Welcome to Prails";
   }
 
-  /* Render logic:
+  /* Render logic/stragegy:
   1) Controller is instantiated. Controller inherits the model, wich
      inherits the core class. Controller has all the required methods
      to operate.
@@ -42,6 +42,24 @@ class prails {
      an API via Ajax (Requires jQuery).
   */
   public function Render() {
+    // Try to get the view based on the action
+    if(!$this->_view)
+    {
+      if($this->_private)
+      {
+        if(file_exists(ROOT."app/views/public/".$this->_action.".php"))
+        {
+          $this->_view = $this->_action.".php";
+        }
+      }
+      else
+      {
+        if(file_exists(ROOT."app/views/private/".$this->_action.".php"))
+        {
+          $this->_view = $this->_action.".php";
+        }
+      }
+    }
     if($this->_view)
     {
       ob_start();
@@ -61,6 +79,23 @@ class prails {
 
   public function GetAll() {
     return $this->_data_set;
+  }
+  
+  public function ProcessRepeat($html)
+  {
+    $start_tag = "{start_repeat}";
+    $end_tag = "{end_repeat}";
+    if(strpos($html, $start_tag) && strpos($html, $end_tag))
+    {
+      $html_to_repeat = substr($html, strpos($html, $start_tag) + strlen($start_tag), strpos($html, $end_tag) - strpos($html, $start_tag)- strlen($start_tag)) ;
+      return $html_to_repeat;
+    }
+    if(strpos($html, substr($start_tag, 1,  strlen($start_tag)-1)) && strpos($html, $end_tag) && strpos($html, substr($start_tag, 0,1)) == 0)
+    {
+      $html_to_repeat = substr($html, strpos($html, $start_tag) + strlen($start_tag), strpos($html, $end_tag) - strpos($html, $start_tag)- strlen($start_tag)) ;
+      return $html_to_repeat;
+    }
+    else return $html;
   }
 
 }
