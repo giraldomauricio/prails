@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<testsuites errors="0" failures="0" skipped="0" tests="18" time="0" timestamp="2013-09-06 EDT 08:12:48">
+		<testsuite name="Very Simple Test Suite" tests="18" errors="0" failures="0" skipped="0">
+		<properties/>
+			<testcase name="Test empty controller route" time="0.00">
+		</testcase>
+			<testcase name="Test empty action route" time="0.00">
+		</testcase>
+			<testcase name="Test HTML" time="0.00">
+		</testcase>
+			<testcase name="Test render" time="0.00">
+		</testcase>
+			<testcase name="Test dataset with fixture" time="0.00">
+		</testcase>
+			<testcase name="Test controller route" time="0.00">
+		</testcase>
+			<testcase name="Test action route" time="0.00">
+		</testcase>
+			<testcase name="Test dinamic action instance" time="0.00">
+		</testcase>
+			<testcase name="Test basic query string decomposing" time="0.00">
+		</testcase>
+			<testcase name="Test query string decomposing var 1" time="0.00">
+		</testcase>
+			<testcase name="Test query string decomposing var 2" time="0.00">
+		</testcase>
+			<testcase name="Test controller route" time="0.00">
+		</testcase>
+			<testcase name="Test action route" time="0.00">
+		</testcase>
+			<testcase name="Test query string decomposing var 3" time="0.00">
+		</testcase>
+			<testcase name="Test controller route only controller and action" time="0.00">
+		</testcase>
+			<testcase name="Test only action" time="0.00">
+		</testcase>
+			<testcase name="Test controller route only controller" time="0.00">
+		</testcase>
+			<testcase name="Test only action" time="0.00">
+		</testcase>
+	</testsuite>
+</testsuites>

@@ -1,8 +1,5 @@
 <?php
-require "../../lib/routes.class.php";
-require "../../lib/tests.class.php";
 $route_class = new routes();
-$test = new VerySimpleTests();
 $route_class->action = "foo";
 $route_class->controller = "bar";
 $route_class->GetQueryString("?a=b");
@@ -22,6 +19,5 @@ $test->AssertEqual($route_class->action , "bar", "Test only action");
 $_SERVER["QUERY_STRING"] = "foo";
 $route_class->AnalizeAndProcessRoutes();
 $test->Assert($route_class->controller == "foo", "Test controller route only controller");
-$test->AssertEqual($route_class->action , "", "Test only action");
-$test->Results();
+$test->AssertEqual($route_class->action , "index", "Test only action");
 ?>

@@ -18,7 +18,7 @@ session_start();
 
 date_default_timezone_set('America/New_York');
 
-require_once "hosts.php";
+require_once realpath(dirname(__FILE__))."/hosts.php";
 // Load configuration file
 require_once $hosts[$_SERVER["HTTP_HOST"]];
 
@@ -28,6 +28,8 @@ define("DBNAME", $db_name);
 define("DBUSER", $db_user);
 define("DBPASSWORD", $db_password);
 define("LIBRARY", $app_root);
+// TODO: Refactor following constant
+//define("LIBRARY", $app_root."lib");
 define("LOGTYPE", $log_type);
 define("LOGFOLDER", $log_folder);
 define("DEBUG", $debug);

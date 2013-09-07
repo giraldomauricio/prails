@@ -1,10 +1,4 @@
 <?php
-require "../../lib/prails.class.php";
-require "../../lib/routes.class.php";
-require "../../app/models/demo_model.class.php";
-require "../../app/controllers/demo_controller.class.php";
-require "../../lib/tests.class.php";
-$test = new VerySimpleTests();
 
 $core = new demo_controller();
 $core->_html = "Hello";
@@ -22,5 +16,5 @@ $newcore = new $controller();
 $newcore->LoadFixture("demo_fixture.php");
 $actual = $newcore->$action();
 $test->AssertEqual($actual, "Some name", "Test dinamic action instance");
-$test->Results();
+
 ?>
