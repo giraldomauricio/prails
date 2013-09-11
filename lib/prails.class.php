@@ -97,6 +97,172 @@ class prails {
     }
     else return $html;
   }
+  // MySQL
+  public function Connect() {
+    $logger = new logFactory();
+    logFactory::log($this, "Connecting to " . DBUSER . "@" . DBSERVER . "/" . DBNAME);
+    $this->ID = mysql_connect(DBSERVER, DBUSER, DBPASSWORD) or $logger->log($this, "'Error Connecting:" . mysql_error());
+    mysql_select_db(DBNAME) or $logger->log($this, "Error Selecting DB:" . mysql_error());
+  }
+
+  public function DynamicCall() {
+
+    $this->Connect();
+
+    $call = $_REQUEST["doCall"];
+
+    //print $call;
+
+    foreach ($_REQUEST as $key => $value) {
+      $this->$key = $value;
+    }
+
+    if (method_exists($this, $call)) {
+      call_user_func(array($this, $call));
+    }
+
+    //$this->$this->idName = "A";
+  }
+  
+  public function QueryAndLoad($sql = "") {
+    $logger = new logFactory();
+    if (!$sql)
+      $sql = $this->sql;
+    // Validate malicious code is not present:
+    if (!strpos(strtolower($sql), "alter table") && !strpos(strtolower($sql), "drop table") && !strpos(strtolower($sql), "create table")) {
+      logFactory::log($this, $sql);
+      $this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
+      $this->Load();
+      return true;
+    }
+    else
+      return false;
+  }
+  
+  public function Query($sql = "") {
+    $logger = new logFactory();
+    if (!$sql)
+      $sql = $this->sql;
+    // Validate malicious code is not present:
+    if (!strpos(strtolower($sql), "alter table") && !strpos(strtolower($sql), "drop table") && !strpos(strtolower($sql), "create table")) {
+      logFactory::log($this, $sql);
+      $this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
+      return true;
+    }
+    else
+      return false;
+  }
+  
+  public function Count() {
+    //$this->filas = mysql_num_rows($this->RES) or die(mysql_error());
+    $this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
+    return $this->recordCount;
+  }
+  
+  public function GetLastId() {
+    $this->last_id = mysql_insert_id();
+    return $this->last_id;
+  }
+  
+  public function Lines() {
+    //$this->filas = mysql_num_rows($this->RES) or die(mysql_error());
+    $this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
+    return $this->recordCount;
+  }
+  
+  public function Affected() {
+    return mysql_affected_rows($this->RES);
+  }
+  
+  public function Load() {
+    $this->field = mysql_fetch_object($this->RES);
+    if ($this->field) {
+      foreach ($this->field as $key => $value) {
+        $this->$key = $value;
+      }
+      return true;
+    }
+    else
+      return false;
+  }
+  
+  public function GetParameters() {
+    $class_vars = get_class_vars(get_class($this));
+    foreach ($class_vars as $name => $value) {
+      $this->data[$name] = $_REQUEST[$name];
+    }
+    return true;
+  }
+  
+  public function InsertOne() {
+    $d = $this->GetInsertValues();
+    $this->sql = "INSERT INTO " . $this->tableName . " (" . $d[0] . ") VALUES (" . $d[1] . ")";
+    if ($this->Query()) {
+      $this->lastID = mysql_insert_id();
+      return $this->lastID;
+    }
+    else
+      return false;
+  }
+  
+  public function GetAll() {
+    $this->sql = "SELECT * FROM " . $this->tableName;
+    return $this->Query();
+  }
+  
+  public function GetOne($id) {
+    $this->sql = "SELECT * FROM " . $this->tableName . " WHERE " . $this->idName . " = " . $id;
+    return $this->Query();
+  }
+  
+  public function UpdateOne($id) {
+    $d = $this->GetUpdateValues();
+    $this->sql = "UPDATE " . $this->tableName . " SET " . $d . " WHERE " . $this->idName . " = " . $id;
+    return $this->Query();
+  }
+  
+  public function DeleteOne($id) {
+    $d = $this->getInsertValues();
+    $this->sql = "DELETE FROM " . $this->tableName . " WHERE " . $this->idName . " = " . $id;
+    return $this->Query();
+  }
+  
+  public function GetInsertValues() {
+    $class_vars = get_class_vars(get_class($this));
+    foreach ($class_vars as $name => $value) {
+      if ($_REQUEST[$name] != "") {
+        $keys .= $name . ",";
+        if (is_array($_REQUEST[$name]))
+          $values .= $this->Enclose(implode(",", $_REQUEST[$name])) . ",";
+        else
+          $values .= $this->Enclose($_REQUEST[$name]) . ",";
+      }
+    }
+    return array(substr($keys, 0, -1), substr($values, 0, -1));
+  }
+  
+  public function Enclose($data) {
+    if (is_numeric($data))
+      return $data;
+    else {
+      return "'" . addslashes(htmlentities($data)) . "'";
+    }
+  }
+  
+  public function GetUpdateValues() {
+    $sets = "";
+    $class_vars = get_class_vars(get_class($this));
+    foreach ($class_vars as $name => $key) {
+      if ($_REQUEST[$name] != "") {
+        if (is_array($_REQUEST[$name]))
+          $sets .= $name . " = " . $this->Enclose(implode(",", $_REQUEST[$name])) . ",";
+        else
+          $sets .= $name . " = " . $this->Enclose($_REQUEST[$name]) . ",";
+      }
+      if (is_numeric($_REQUEST[$name]) && $_REQUEST[$name] == 0) $sets .= $name . " = 0 ,";
+    }
+    return substr($sets, 0, -1);
+  }
 
 }
 

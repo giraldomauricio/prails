@@ -3,7 +3,7 @@
 $uri           = "http://localhost/";
 // Database configuration:
 $db_server     = "127.0.0.1";
-$db_name       = "psonia";
+$db_name       = "prails";
 $db_user       = "root";
 $db_password   = "root";
 // Optional parameters:
