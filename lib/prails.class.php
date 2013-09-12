@@ -49,14 +49,14 @@ class prails {
     {
       if($this->_private)
       {
-        if(file_exists(ROOT."app/views/public/".$this->_action.".php"))
+        if(file_exists(ROOT."app/views/public/".$this->_controller."/".$this->_action.".php"))
         {
           $this->_view = $this->_action.".php";
         }
       }
       else
       {
-        if(file_exists(ROOT."app/views/private/".$this->_action.".php"))
+        if(file_exists(ROOT."app/views/private/".$this->_controller."/".$this->_action.".php"))
         {
           $this->_view = $this->_action.".php";
         }
@@ -66,8 +66,8 @@ class prails {
     { 
       ob_start();
         // TODO: refactor public and private locations to set by user
-        if($this->_private) include ROOT."app/views/private/".$this->_view.".php";
-        else include include ROOT."app/views/public/".$this->_view.".php";
+        if($this->_private) include ROOT."app/views/private/".$this->_controller."/".$this->_view.".php";
+        else include include ROOT."app/views/public/".$this->_controller."/".$this->_view.".php";
         $this->_html = ob_get_contents();
       ob_end_clean();
     }
