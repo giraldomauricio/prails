@@ -13,7 +13,7 @@ class demo_controller extends demo_model{
   
   public function demo_action()
   {
-    $this->GetAll();
+    $this->GetAllDS();
     $this->_html = $this->_data_set->DataSet[0]->name;
     return $this->Render();
   }

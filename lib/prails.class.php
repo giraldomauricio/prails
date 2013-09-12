@@ -22,7 +22,8 @@ class prails {
   var $_action = "";
   var $_view = "";
   var $_private = false;
-  var $_layout = "";
+  var $_layout = "layout";
+  var $_assets = "";
 
   public function index() {
     $this->_html = "Welcome to Prails";
@@ -43,6 +44,7 @@ class prails {
   */
   public function Render() {
     // Try to get the view based on the action
+    
     if(!$this->_view)
     {
       if($this->_private)
@@ -61,23 +63,39 @@ class prails {
       }
     }
     if($this->_view)
-    {
+    { 
       ob_start();
         // TODO: refactor public and private locations to set by user
-        if($this->_private) include ROOT."app/views/private/".$this->_view;
-        else include include ROOT."app/views/public/".$this->_view;
+        if($this->_private) include ROOT."app/views/private/".$this->_view.".php";
+        else include include ROOT."app/views/public/".$this->_view.".php";
         $this->_html = ob_get_contents();
       ob_end_clean();
     }
-    return $this->_html;
+    print $this->_html;
   }
+
+  // Layouts files are in the form of "_layout_name.php, but is
+  // called "layout_name".
+  public function RenderView()
+  {
+    $layout_file = ROOT."app/views/_".$this->_layout.".php";
+    if($layout_file != "" && file_exists($layout_file))
+    {
+      ob_start();
+        include $layout_file;
+        $this->_html = ob_get_contents();
+      ob_end_clean();
+    }
+    print $this->_html;
+  }
+
 
   public function LoadFixture($fixture_name) {
     include ROOT."/db/fixtures/" . $fixture_name;
     $this->_data_set = $data;
   }
 
-  public function GetAll() {
+  public function GetAllDS() {
     return $this->_data_set;
   }
   
@@ -106,7 +124,7 @@ class prails {
   }
 
   public function DynamicCall() {
-
+    
     $this->Connect();
 
     $call = $_REQUEST["doCall"];

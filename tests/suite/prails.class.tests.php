@@ -2,7 +2,11 @@
 
 $core = new demo_controller();
 $core->_html = "Hello";
-$test->AssertEqual($core->Render(), "Hello", "Test render");
+ob_start();
+$core->Render();
+$results = ob_get_contents();
+ob_end_clean();
+$test->AssertEqual($results, "Hello", "Test render");
 $core->LoadFixture("demo_fixture.php");
 $test->AssertEqual($core->_data_set->DataSet[0]->id, 1, "Test dataset with fixture");
 $_SERVER["QUERY_STRING"] = "demo_controller/demo_action/";
@@ -14,8 +18,11 @@ $test->AssertEqual($controller, "demo_controller", "Test controller route");
 $test->AssertEqual($action, "demo_action", "Test action route");
 $newcore = new $controller();
 $newcore->LoadFixture("demo_fixture.php");
+ob_start();
 $actual = $newcore->$action();
-$test->AssertEqual($actual, "Some name", "Test dinamic action instance");
+$results = ob_get_contents();
+ob_end_clean();
+$test->AssertEqual($results, "Some name", "Test dinamic action instance");
 $html = "<div>{start_repeat}Foo{end_repeat}</div>";
 $extraction = $core->ProcessRepeat($html);
 $test->AssertEqual($extraction,"Foo","Test repeat extraction");

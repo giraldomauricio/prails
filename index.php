@@ -11,10 +11,11 @@ $init->AnalizeAndProcessRoutes();
 // 1) Load the Controller
 // 2) Execute the method in the controller described by the action/view pair
 // 3) Either render the view, render here the result or redirect
-// $controller = new $controller;
 $controller = $init->controller;
 $core = new $controller();
 $action = $init->action;
+$core->_controller = $controller;
+$core->_action = $action;
+$core->_view = $action;
 $core->$action();
-print $core->_html;
 ?>
