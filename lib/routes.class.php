@@ -15,6 +15,7 @@ class Routes {
   var $controller;
   var $action;
   var $query_string;
+  var $id;
 
   public function AnalizeAndProcessRoutes() {
     $initial_query_string = $_SERVER["QUERY_STRING"];
@@ -33,6 +34,7 @@ class Routes {
       $key_value_pair_array = explode("=", $key_value_pair);
       $this->$key_value_pair_array[0] = $key_value_pair_array[1];
     }
+    if(count($query_string_array)==1) $this->id = $query_string_array[0];
   }
 
 }

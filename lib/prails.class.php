@@ -204,6 +204,20 @@ class prails {
       return false;
   }
   
+  public function GetDataSet()
+  {
+    $result = array();
+    while (false !== ($this->field = mysql_fetch_object($this->RES))) {
+      /*$data_set = new stdClass();
+      foreach ($this->field as $key => $value) {
+        $data_set->$key = $value;
+      }*/
+      array_push($result, $this->field);
+    }
+    return $result;
+  }
+
+
   public function GetParameters() {
     $class_vars = get_class_vars(get_class($this));
     foreach ($class_vars as $name => $value) {

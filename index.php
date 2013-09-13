@@ -14,8 +14,10 @@ $init->AnalizeAndProcessRoutes();
 $controller = $init->controller;
 $core = new $controller();
 $action = $init->action;
+$id = $init->id;
 $core->_controller = $controller;
 $core->_action = $action;
 $core->_view = $action;
+$core->_id = $id;
 $core->$action();
 ?>
