@@ -10,7 +10,7 @@
  *
  * @author murdock
  */
-class prails {
+class prails extends context{
 
   //put your code here
 
@@ -24,6 +24,9 @@ class prails {
   var $_private = false;
   var $_layout = "layout";
   var $_assets = "";
+  var $_types = array();
+  var $_required = array();
+  var $_db;
 
   public function index() {
     $this->_html = "Welcome to Prails";
@@ -119,8 +122,8 @@ class prails {
   public function Connect() {
     $logger = new logFactory();
     logFactory::log($this, "Connecting to " . DBUSER . "@" . DBSERVER . "/" . DBNAME);
-    $this->ID = mysql_connect(DBSERVER, DBUSER, DBPASSWORD) or $logger->log($this, "'Error Connecting:" . mysql_error());
-    mysql_select_db(DBNAME) or $logger->log($this, "Error Selecting DB:" . mysql_error());
+    $this->ID = $this->GetConnectionId(DBSERVER, DBUSER, DBPASSWORD, DBNAME);
+    //$this->ID = mysql_connect(DBSERVER, DBUSER, DBPASSWORD) or $logger->log($this, "'Error Connecting:" . mysql_error());
   }
 
   public function DynamicCall() {
@@ -149,7 +152,8 @@ class prails {
     // Validate malicious code is not present:
     if (!strpos(strtolower($sql), "alter table") && !strpos(strtolower($sql), "drop table") && !strpos(strtolower($sql), "create table")) {
       logFactory::log($this, $sql);
-      $this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
+      $this->RES = $this->ExecuteQuery($sql);
+      //$this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
       $this->Load();
       return true;
     }
@@ -164,7 +168,8 @@ class prails {
     // Validate malicious code is not present:
     if (!strpos(strtolower($sql), "alter table") && !strpos(strtolower($sql), "drop table") && !strpos(strtolower($sql), "create table")) {
       logFactory::log($this, $sql);
-      $this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
+      $this->RES = $this->ExecuteQuery($sql);
+      //$this->RES = mysql_query($sql) or $logger->log($this, "SQL ERROR: " . $sql . ", " . mysql_error());
       return true;
     }
     else
@@ -172,28 +177,31 @@ class prails {
   }
   
   public function Count() {
-    //$this->filas = mysql_num_rows($this->RES) or die(mysql_error());
-    $this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
+    $this->recordCount = $this->GetRowsCount();
+    //$this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
     return $this->recordCount;
   }
   
   public function GetLastId() {
-    $this->last_id = mysql_insert_id();
+    $this->last_id = $this->GetInsertId();
+    //$this->last_id = mysql_insert_id();
     return $this->last_id;
   }
   
   public function Lines() {
-    //$this->filas = mysql_num_rows($this->RES) or die(mysql_error());
-    $this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
+    $this->recordCount = $this->GetRowsCount();
+    //$this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
     return $this->recordCount;
   }
   
   public function Affected() {
-    return mysql_affected_rows($this->RES);
+    return $this->GetRowsAffected();
+    //return mysql_affected_rows($this->RES);
   }
   
   public function Load() {
-    $this->field = mysql_fetch_object($this->RES);
+    //$this->field = mysql_fetch_object($this->RES);
+    $this->field = $this->GetRecordObject();
     if ($this->field) {
       foreach ($this->field as $key => $value) {
         $this->$key = $value;
@@ -207,7 +215,7 @@ class prails {
   public function GetDataSet()
   {
     $result = array();
-    while (false !== ($this->field = mysql_fetch_object($this->RES))) {
+    while (false !== ($this->field = $this->GetRecordObject())) {
       /*$data_set = new stdClass();
       foreach ($this->field as $key => $value) {
         $data_set->$key = $value;
@@ -230,7 +238,8 @@ class prails {
     $d = $this->GetInsertValues();
     $this->sql = "INSERT INTO " . $this->tableName . " (" . $d[0] . ") VALUES (" . $d[1] . ")";
     if ($this->Query()) {
-      $this->lastID = mysql_insert_id();
+      $this->lastID = $this->GetInsertId();
+      //$this->lastID = mysql_insert_id();
       return $this->lastID;
     }
     else
@@ -294,6 +303,27 @@ class prails {
       if (is_numeric($_REQUEST[$name]) && $_REQUEST[$name] == 0) $sets .= $name . " = 0 ,";
     }
     return substr($sets, 0, -1);
+  }
+  
+ /**
+ * (Prails 1.0)<br/>
+ * Checks whether a model is valid
+ * @link http://prails.com/?/docs/find/isvalid
+ * @param None <p>
+ * Object is received via POST
+ * </p>
+ * <p>
+ * @return bool true if the model is valid; false otherwise.
+ * </p>
+ */
+  public function IsValid()
+  {
+    $result = true;
+    foreach ($this->_required as $field)
+    {
+      if($_POST[$field] == "") $result = FALSE;
+    }
+    return $result;
   }
 
 }

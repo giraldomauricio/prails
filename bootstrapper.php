@@ -22,6 +22,7 @@ require_once realpath(dirname(__FILE__))."/hosts.php";
 // Load configuration file
 require_once $hosts[$_SERVER["HTTP_HOST"]];
 
+define("DBTYPE", $db_type);
 define("DBSERVER", $db_server);
 define("SECURE", $secure);
 define("DBNAME", $db_name);
@@ -52,6 +53,8 @@ if ($_SERVER['HTTPS'] != "on" && SECURE) {
 // Load all classes
 
 // Load base classes
+require_once LIBRARY . "lib/Prails_iDB.interface.php";
+require_once LIBRARY . "lib/context.class.php";
 require_once LIBRARY . "lib/prails.class.php";
 require_once LIBRARY . "lib/log.php";
 require_once LIBRARY . "lib/utils.class.php";

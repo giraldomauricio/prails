@@ -2,6 +2,7 @@
 // phpExelerator 4
 $uri           = "http://www.vaporwave.net/";
 // Database configuration:
+$db_type       = "mysql";
 $db_server     = "vaporwavedb.db.11207537.hostedresource.com";
 $db_name       = "vaporwavedb";
 $db_user       = "vaporwavedb";
