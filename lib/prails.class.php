@@ -14,6 +14,7 @@ class prails extends context{
 
   //put your code here
 
+  var $_version = "1.0b4";
   var $_html = "";
   var $_table = "";
   var $_id = "";
@@ -40,6 +41,9 @@ class prails extends context{
      _html variable with some content or set a view to render.
   3) If the view is available, _html is ignored and its filled with the view.
   4) The view uses the information set by the controller.
+   * 
+   * Prails is deigned to handle either Fat-Controllers or Fat-Models, depends on
+   * where you want to put the logic.
   
   POST/GET methods
   1) Post and Get can be handled by the controller (Postback) or by
@@ -79,8 +83,10 @@ class prails extends context{
 
   // Layouts files are in the form of "_layout_name.php, but is
   // called "layout_name".
-  public function RenderView()
+  public function RenderView($view_name = "")
   {
+    // User can render the default view or a specific view.
+    if($view_name != "") $this->_view = $view_name;
     $layout_file = ROOT."app/views/_".$this->_layout.".php";
     if($layout_file != "" && file_exists($layout_file))
     {
@@ -142,7 +148,16 @@ class prails extends context{
       call_user_func(array($this, $call));
     }
 
-    //$this->$this->idName = "A";
+    $initial_query_string = $_SERVER["QUERY_STRING"];
+    $request = explode("/", $initial_query_string);
+    $query_string = $request[2];
+    $query_string = str_replace("?", "", $query_string);
+    $query_string_array = explode("&", $query_string);
+    foreach ($query_string_array as $key_value_pair) {
+      $key_value_pair_array = explode("=", $key_value_pair);
+      if($key_value_pair_array[0]) $this->$key_value_pair_array[0] = $key_value_pair_array[1];
+    }
+    if(count($query_string_array)==1) $this->id = $query_string_array[0];
   }
   
   public function QueryAndLoad($sql = "") {
@@ -236,7 +251,7 @@ class prails extends context{
   
   public function InsertOne() {
     $d = $this->GetInsertValues();
-    $this->sql = "INSERT INTO " . $this->tableName . " (" . $d[0] . ") VALUES (" . $d[1] . ")";
+    $this->sql = "INSERT INTO " . $this->_table . " (" . $d[0] . ") VALUES (" . $d[1] . ")";
     if ($this->Query()) {
       $this->lastID = $this->GetInsertId();
       //$this->lastID = mysql_insert_id();
@@ -247,24 +262,24 @@ class prails extends context{
   }
   
   public function GetAll() {
-    $this->sql = "SELECT * FROM " . $this->tableName;
+    $this->sql = "SELECT * FROM " . $this->_table;
     return $this->Query();
   }
   
   public function GetOne($id) {
-    $this->sql = "SELECT * FROM " . $this->tableName . " WHERE " . $this->idName . " = " . $id;
+    $this->sql = "SELECT * FROM " . $this->_table . " WHERE " . $this->_key . " = " . $id;
     return $this->Query();
   }
   
   public function UpdateOne($id) {
     $d = $this->GetUpdateValues();
-    $this->sql = "UPDATE " . $this->tableName . " SET " . $d . " WHERE " . $this->idName . " = " . $id;
+    $this->sql = "UPDATE " . $this->_table . " SET " . $d . " WHERE " . $this->_key . " = " . $id;
     return $this->Query();
   }
   
   public function DeleteOne($id) {
     $d = $this->getInsertValues();
-    $this->sql = "DELETE FROM " . $this->tableName . " WHERE " . $this->idName . " = " . $id;
+    $this->sql = "DELETE FROM " . $this->_table . " WHERE " . $this->_key . " = " . $id;
     return $this->Query();
   }
   

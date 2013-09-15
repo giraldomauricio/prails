@@ -20,7 +20,13 @@ date_default_timezone_set('America/New_York');
 
 require_once realpath(dirname(__FILE__))."/hosts.php";
 // Load configuration file
-require_once $hosts[$_SERVER["HTTP_HOST"]];
+try
+{
+  require_once $hosts[$_SERVER["HTTP_HOST"]];
+}  catch (Exception $e)
+{
+  rescue::NoConfigurationAvailable();
+}
 
 define("DBTYPE", $db_type);
 define("DBSERVER", $db_server);
@@ -41,6 +47,7 @@ define("FROMEMAIL", $from_email);
 define("TEMPLATES", $templates);
 define("URI", $uri);
 define("ADMINEMAIL", $adminEmail);
+define("LASTQUERY", "");
 
 if ($_SERVER['HTTPS'] != "on" && SECURE) {
   $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

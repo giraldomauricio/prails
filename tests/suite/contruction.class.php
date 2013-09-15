@@ -1,4 +1,4 @@
-<?php
+  <?php
 $route_class = new routes();
 $_SERVER["QUERY_STRING"] = "";
 $route_class->AnalizeAndProcessRoutes();

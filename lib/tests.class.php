@@ -29,20 +29,20 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if ($actual != $expected) {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": failed. Expected [" . $expected . "], actual: [" . $actual."]";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": failed. Expected [" . $expected . "], actual: [" . $actual."]";
       $this->errorCounter++;
       array_push($this->tests, $this->test);
       $this->test->success = false;
       $this->test->message = "Expected [" . $expected . "], actual: [" . $actual."]";
       return false;
     } else {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": passed.";
       array_push($this->tests, $this->test);
       return true;
     }
@@ -55,13 +55,13 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if (!assert($assertion)) {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": failed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": failed.";
       $this->errorCounter++;
       array_push($this->tests, $this->test);
       $this->test->success = false;
@@ -69,7 +69,7 @@ class VerySimpleTests {
       $this->test->message = "Failed";
       return false;
     } else {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": passed.";
       $this->test->name = $name;
       array_push($this->tests, $this->test);
       return true;
@@ -83,14 +83,14 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
 
     if (strlen($actual) <= 0) {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": failed. The value is empty";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": failed. The value is empty";
       $this->errorCounter++;
       $this->test->name = $name;
       array_push($this->tests, $this->test);
@@ -99,7 +99,7 @@ class VerySimpleTests {
       $this->test->message = "Value is empty";
       return false;
     } else {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": passed.";
       $this->test->name = $name;
       array_push($this->tests, $this->test);
       return true;
@@ -113,13 +113,13 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if ($actual == $expected) {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": failed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": failed.";
       $this->errorCounter++;
       $this->test->name = $name;
       array_push($this->tests, $this->test);
@@ -128,7 +128,7 @@ class VerySimpleTests {
       $this->test->message = "Failed";
       return false;
     } else {
-      $this->messages[$this->testCount] = str_pad($name, 60, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": passed.";
       array_push($this->tests, $this->test);
       return true;
     }

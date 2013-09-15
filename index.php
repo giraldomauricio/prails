@@ -1,10 +1,10 @@
 <?php
-// Prails v.0.1
+// Prails v.1
 require 'bootstrapper.php';
 // Routing file
 // This file handles all the requests received and routes
 // the calls acordingly.
-// ?controller/view
+// ?controller/view/Q_S
 $init = new routes();
 $init->AnalizeAndProcessRoutes();
 // MVC approach:
