@@ -19,5 +19,7 @@ $core->_controller = $controller;
 $core->_action = $action;
 $core->_view = $action;
 $core->_id = $id;
+// Handle Post requests:
+if($_POST["PRAILS_POST"] == "TRUE" && method_exists($core, $action."_post")) $action = $action."_post";
 $core->$action();
 ?>

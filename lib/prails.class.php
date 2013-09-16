@@ -29,6 +29,7 @@ class prails extends context{
   var $_required = array();
   var $_db;
 
+  
   public function index() {
     $this->_html = "Welcome to Prails";
   }
@@ -94,7 +95,15 @@ class prails extends context{
         include $layout_file;
         $this->_html = ob_get_contents();
       ob_end_clean();
+      // Digest Prails specific tags:
+        $this->_html = str_replace("</form>", "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n</form>\n", $this->_html);
     }
+    print $this->_html;
+  }
+  
+  public function RenderHtml($html)
+  {
+    $this->_html = $html;
     print $this->_html;
   }
 
