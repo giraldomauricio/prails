@@ -28,6 +28,7 @@ class prails extends context{
   var $_types = array();
   var $_required = array();
   var $_db;
+  var $_token;
 
   
   public function index() {
@@ -96,7 +97,10 @@ class prails extends context{
         $this->_html = ob_get_contents();
       ob_end_clean();
       // Digest Prails specific tags:
-        $this->_html = str_replace("</form>", "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n</form>\n", $this->_html);
+      $hidden_field = "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n";
+      $token = $this->Tokenize();
+      $hidden_token = "<input type=\"hidden\" id=\"PRAILS_TOKEN\" name=\"PRAILS_TOKEN\" value=\"".$token."\" />\n";
+        $this->_html = str_replace("</form>", $hidden_field.$hidden_token."</form>\n" , $this->_html);
     }
     print $this->_html;
   }
@@ -348,6 +352,70 @@ class prails extends context{
       if($_POST[$field] == "") $result = FALSE;
     }
     return $result;
+  }
+  
+  /**
+   * (Prails 1.0)<br/>
+   * Redirects the user to the specified location
+   * @link http://prails.com/?/docs/find/redirect
+   * @param view<p>
+   * View to be redirected
+   * </p>
+   * @param controller (Optional)<p>
+   * Controller to call
+   * <p>
+   * @return new view
+   * </p>
+   */
+  public function Redirect($view, $controller = "")
+  {
+    if($controller == "") $controller = $this->_controller;
+    header("Location: ?".$controller."/".$view);
+  }
+  
+  /**
+   * (Prails 1.0)<br/>
+   * Tokeinized the session each time to validate POST requests
+   * @link http://prails.com/?/docs/find/tokenize
+   */
+  public function Tokenize()
+  {
+    $token = explode(" ",microtime());
+    return sprintf( '%04x-%08s-%08s-%04s-%04x%04x',
+        $serverID,
+        $this->clientIPToHex(),
+        substr("00000000".dechex($t[1]),-8),   // get 8HEX of unixtime
+        substr("0000".dechex(round($t[0]*65536)),-4), // get 4HEX of microtime
+        mt_rand(0,0xffff), mt_rand(0,0xffff));
+    $_SESSION["prails_token"] = $token;
+    return $token;
+  }
+  
+  function clientIPToHex($ip="") {
+    $hex="";
+    if($ip=="") $ip=getEnv("REMOTE_ADDR");
+    $part=explode('.', $ip);
+    for ($i=0; $i<=count($part)-1; $i++) {
+        $hex.=substr("0".dechex($part[$i]),-2);
+    }
+    return $hex;
+  }
+  
+  /**
+   * (Prails 1.0)<br/>
+   * Checks the token
+   * @link http://prails.com/?/docs/find/ValidateToken
+   * @param token<p>
+   * Token to validate
+   * </p>
+   * <p>
+   * @return boolean
+   * true if the token is valid
+   * </p>
+   */
+  public function ValidateToken($token)
+  {
+    return ($token == $_SESSION["prails_token"]);
   }
 
 }
