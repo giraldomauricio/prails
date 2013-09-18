@@ -21,5 +21,15 @@ $core->_view = $action;
 $core->_id = $id;
 // Handle Post requests:
 if($_POST["PRAILS_POST"] == "TRUE" && method_exists($core, $action."_post")) $action = $action."_post";
-$core->$action();
+// Prails can invoke a generic rescue method on every controller to handle any request
+if(method_exists($core, "rescue") && !method_exists($core, $action)) $action = "rescue";
+// Verify if the method exists
+if(method_exists($core, $action))
+{
+  $core->$action();
+}
+else
+{
+  rescue::NoActionInController($action, $controller);
+}
 ?>

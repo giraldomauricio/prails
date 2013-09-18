@@ -35,6 +35,7 @@ class VerySimpleTests {
     }
     $this->testCount++;
     if ($actual != $expected) {
+      if(is_object($actual)) $actual = get_object_vars($actual);
       $this->messages[$this->testCount] = str_pad($name, 100, ".", STR_PAD_RIGHT) . ": failed. Expected [" . $expected . "], actual: [" . $actual."]";
       $this->errorCounter++;
       array_push($this->tests, $this->test);

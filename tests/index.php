@@ -6,7 +6,6 @@ $mydir = dir("suite");
     if (substr($file, 0, 1) != "." && substr($file, 0, 1) != "_") {
       if (DEBUG)
         logFactory::log($this, "Tests", " Loading [" . $file . "]..");
-      //print "<hr/>Running:".$file."<br/>";
       require_once LIBRARY . "tests/suite/" . $file;
       if (DEBUG)
         logFactory::log($this, "Tests", "[" . $file . "] loaded successfully.");
