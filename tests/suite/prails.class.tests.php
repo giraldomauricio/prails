@@ -18,7 +18,10 @@ $test->AssertEqual($controller, "demo_controller", "Test controller route");
 $test->AssertEqual($action, "demo_action", "Test action route");
 $newcore = new $controller();
 $newcore->LoadFixture("demo_fixture.php");
-$actual = $newcore->$action();
+ob_start();
+$newcore->$action();
+$actual = ob_get_contents();
+ob_end_clean();
 $test->AssertEqual($actual, "Some name", "Test dinamic action instance");
 $html = "<div>{start_repeat}Foo{end_repeat}</div>";
 $extraction = $core->ProcessRepeat($html);
@@ -32,4 +35,6 @@ $test->AssertEqual($extraction,"Foo","Test repeat extraction beginning");
 $html = "start_repeat}Foo{end_repeat}";
 $extraction = $core->ProcessRepeat($html);
 $test->AssertEqual($extraction,$html,"Test repeat extraction beginning bad");
+$token = $core->Tokenize();
+$test->AssertEqual($token,$core->ValidateToken($token),"Test token validation");
 ?>

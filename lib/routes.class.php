@@ -25,6 +25,7 @@ class Routes {
     if($request[1]) $this->action = $request[1];
     else $this->action = "index";
     if($request[2]) $this->query_string = $this->GetQueryString($request[2]);
+    print_r($this->query_string);
   }
 
   public function GetQueryString($query_string) {

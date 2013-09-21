@@ -10,6 +10,7 @@ class Utils {
   var $days = array("Monday" => "Monday", "Tuesday" => "Tuesday", "Wednesday" => "Wednesday", "Thursday" => "Thursday", "Friday" => "Friday", "Saturday" => "Saturday", "Sunday" => "Sunday");
   var $shortDays = array("Mon" => "Mon", "Tue" => "Tue", "Wed" => "Wed", "Thu" => "Thu", "Fri" => "Fri", "Sat" => "Sat", "Sun" => "Sun");
   var $workingdays = array("Monday" => "Monday", "Tuesday" => "Tuesday", "Wednesday" => "Wednesday", "Thursday" => "Thursday", "Friday" => "Friday");
+  var $daysByNumber = array("1" => "Monday", "2" => "Tuesday", "3" => "Wednesday", "4" => "Thursday", "5" => "Friday", "6" => "Saturday", "7" => "Sunday");
   var $shortWorkingdays = array("Mon" => "Mon", "Tue" => "Tue", "Wed" => "Wed", "Thu" => "Thu", "Fri" => "Fri");
   var $weekDaysOrdered = array("2" => "Mon", "3" => "Tue", "4" => "Wed", "5" => "Thu", "6" => "Fri", "7" => "Sat", "1" => "Sun");
   var $boolean = array("True" => "True", "False" => "False");
@@ -249,6 +250,12 @@ class Utils {
       if ($i > 12)
         array_push($this->hours, sprintf("%02d", $i - 12) . ":00 PM");
     }
+  }
+  
+  public static function GetWeekDay($day)
+  {
+    $daysByNumber = array("1" => "Monday", "2" => "Tuesday", "3" => "Wednesday", "4" => "Thursday", "5" => "Friday", "6" => "Saturday", "7" => "Sunday");
+    return $daysByNumber[$day];
   }
 
   function dropdown($id, $array, $selected) {

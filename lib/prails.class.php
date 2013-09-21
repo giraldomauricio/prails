@@ -85,11 +85,22 @@ class prails extends context{
 
   // Layouts files are in the form of "_layout_name.php, but is
   // called "layout_name".
-  public function RenderView($view_name = "")
+  public function RenderView($view_name = "", $layout = true)
   {
+    if($this->_private) $folder = "private";
+    else $folder = "public";
+    // If there is no layout, render the raw view
+    if(!$layout)
+    {
+      $layout_file = ROOT."app/views/".$folder."/".$this->_controller."/".$view_name.".php";
+    } 
+    else
+    {
+      $layout_file = ROOT."app/views/".$folder."/_".$this->_layout.".php";
+      if($view_name != "") $this->_view = $view_name;
+    }
     // User can render the default view or a specific view.
-    if($view_name != "") $this->_view = $view_name;
-    $layout_file = ROOT."app/views/_".$this->_layout.".php";
+    
     if($layout_file != "" && file_exists($layout_file))
     {
       ob_start();
@@ -100,7 +111,8 @@ class prails extends context{
       $hidden_field = "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n";
       $token = $this->Tokenize();
       $hidden_token = "<input type=\"hidden\" id=\"PRAILS_TOKEN\" name=\"PRAILS_TOKEN\" value=\"".$token."\" />\n";
-        $this->_html = str_replace("</form>", $hidden_field.$hidden_token."</form>\n" , $this->_html);
+      // Add prails tokens if nor present in forms
+      if(!strpos($this->_html, "PRAILS_POST") && !strpos($this->_html, "PRAILS_TOKEN")) $this->_html = str_replace("</form>", $hidden_field.$hidden_token."</form>\n" , $this->_html);
     }
     print $this->_html;
   }
