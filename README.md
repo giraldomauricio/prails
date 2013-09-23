@@ -1,10 +1,14 @@
 prails
 ======
 
+You can call it Php On Rails. Php Rails. PHPoR. But all those name are taken somehow. So I decided to come
+with a closer, but unused approach: PRAILS.
+
 Prails is a Rails inspired PHP MVC Framework. Instead of bringing a heavyweight
 set of classes and assets, this framework is very simple but works just as any other one.
 You can start with your own models or you can create your own. Support for MySQL and fixtures
-come out of the box. Support for other databases is coming in the near future.
+come out of the box. Support for other databases is coming in the near future. Full
+support for Fat Controllers or Fat Models. You choose.
 
 It comes with its own test class to avoid the installation of additional test frameworks. The results
 are jUnit compatible if you want to integrate the project with automated builders. Just point your
@@ -13,7 +17,7 @@ parser to tests/results and your done.
 GETTING STARTED:
 
 The easiest way to get started with PRAILS is to write the basic “Hello World”, the “Prails” way.
-Step 1: Create your model.
+Step 1: Create your model.<br />
 In the directory “/app/models” lets create the file hello.model.php (The naming is optional):
 class hello_model{
 }
