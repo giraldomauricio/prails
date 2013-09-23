@@ -8,7 +8,11 @@ Prails is a Rails inspired PHP MVC Framework. Instead of bringing a heavyweight
 set of classes and assets, this framework is very simple but works just as any other one.
 You can start with your own models or you can create your own. Support for MySQL and fixtures
 come out of the box. Support for other databases is coming in the near future. Full
-support for Fat Controllers or Fat Models. You choose.
+support for Fat Controllers or Fat Models. You choose. Support for private and public pages is 
+included, so you don't have to mix everything under one view directory. Templates support is
+included, so you can rely on a single page to do your UI.
+
+Since it runs over PHP 5, the compatibility is only limited by PHP itself. That means it runs in Linux, Windows, Mac, etc.
 
 It comes with its own test class to avoid the installation of additional test frameworks. The results
 are jUnit compatible if you want to integrate the project with automated builders. Just point your
@@ -76,3 +80,12 @@ http://localhost/application_path/?hello/world
 You must see:
 
 Hello world
+
+TODO LIST:
+
+a) Self creating command: create the structure of the application with a PHP command.
+b) Model and Controller generation from existing databases.
+c) Scaffolding.
+d) Database migrations.
+e) Online documentation.
+f) PRQL: PRails Query Language.
