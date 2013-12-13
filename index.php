@@ -6,6 +6,8 @@ require 'bootstrapper.php';
 // the calls acordingly.
 // ?controller/view/Q_S
 $init = new routes();
+$init->_default_controller = DEFAULT_CONTROLLER;
+$init->_default_action = DEFAULT_ACTION;
 $init->AnalizeAndProcessRoutes();
 // MVC approach:
 // 1) Load the Controller

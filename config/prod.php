@@ -24,4 +24,7 @@ $visual_errors = false;
 $from_email    = "info@vaporwave.net";
 $templates     = "/var/chroot/home/content/37/11207537/html/templates/";
 $adminEmail    = "vaporwavemiami@aol.com";
+// Default controller and action
+$default_controller = "prails";
+$default_action    = "index";
 ?>

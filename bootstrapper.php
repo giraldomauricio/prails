@@ -48,6 +48,9 @@ define("TEMPLATES", $templates);
 define("URI", $uri);
 define("ADMINEMAIL", $adminEmail);
 define("LASTQUERY", "");
+define("AUTHENTICATION_VARIABLE","logged");
+define("DEFAULT_CONTROLLER",$default_controller);
+define("DEFAULT_ACTION",$default_action);
 
 if ($_SERVER['HTTPS'] != "on" && SECURE) {
   $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
