@@ -29,9 +29,13 @@ class prails extends context {
   var $_required = array();
   var $_db;
   var $_token;
+  var $_cms = false;
+  var $_cms_tag = "tag";
+  var $_contents;
 
   public function index() {
-    $this->_html = "Welcome to Prails";
+    $this->_html = "<div style=\"color:blue\"><strong>Welcome to Prails</strong></div><hr />If you see this message, the application is using the default action and controller.</i>";
+    $this->RenderHtml($this->_html);
   }
 
   /* Render logic/stragegy:
@@ -51,9 +55,31 @@ class prails extends context {
     an API via Ajax (Requires jQuery).
    */
 
+  public function RunCMS() {
+    foreach ($this->_contents as $key => $value) {
+      $this->_html = str_replace("{".$this->_cms_tag.":" . $key . ":".$this->_cms_tag."}", $value, $this->_html);
+    }
+    // Cleanup remaining tags
+    $this->_html = str_replace("{".$this->_cms_tag.":", "<!--", str_replace(":".$this->_cms_tag."}", "-->", $this->_html));
+  }
+  
   public function Render() {
     // Try to get the view based on the action
 
+    $auth_var = AUTHENTICATION_VARIABLE;
+    if($this->_private && !$_SESSION[$auth_var])
+    {
+      if (file_exists(ROOT . "app/views/private/_login.php")) {
+        $this->_view = "/../_login";
+      }
+      else
+      {
+        rescue::ViewRequiresAuthentication($this->_action, $this->_controller);
+        exit;
+      }
+    }
+    
+    
     if (!$this->_view) {
       if ($this->_private) {
         if (file_exists(ROOT . "app/views/public/" . $this->_controller . "/" . $this->_action . ".php")) {
@@ -75,6 +101,9 @@ class prails extends context {
       $this->_html = ob_get_contents();
       ob_end_clean();
     }
+    
+    if($this->_cms) $this->RunCMS();
+    
     print $this->_html;
   }
 
@@ -108,11 +137,13 @@ class prails extends context {
       if (!strpos($this->_html, "PRAILS_POST") && !strpos($this->_html, "PRAILS_TOKEN"))
         $this->_html = str_replace("</form>", $hidden_field . $hidden_token . "</form>\n", $this->_html);
     }
+    if($this->_cms) $this->RunCMS();
     print $this->_html;
   }
 
   public function RenderHtml($html) {
     $this->_html = $html;
+    if($this->_cms) $this->RunCMS();
     print $this->_html;
   }
 
