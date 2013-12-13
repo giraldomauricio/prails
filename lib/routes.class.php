@@ -16,16 +16,18 @@ class Routes {
   var $action;
   var $query_string;
   var $id;
+  var $_default_controller = "prails";
+  var $_default_action = "index";
 
   public function AnalizeAndProcessRoutes() {
     $initial_query_string = $_SERVER["QUERY_STRING"];
     $request = explode("/", $initial_query_string);
     if ($request[0]) $this->controller = $request[0];
-    else $this->controller = "prails";
+    else $this->controller = $this->_default_controller;
     if($request[1]) $this->action = $request[1];
-    else $this->action = "index";
+    else $this->action = $this->_default_action;
+    if(!$this->controller && !$this->action) rescue::NoDefaultActionAndController ();
     if($request[2]) $this->query_string = $this->GetQueryString($request[2]);
-    print_r($this->query_string);
   }
 
   public function GetQueryString($query_string) {
