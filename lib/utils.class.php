@@ -280,6 +280,10 @@ class Utils {
     }
     print $this->dropdown($id, $this->yearsPastFuture, $selected);
   }
+  
+  function renderDaysOfWeekByNumber($id, $selected = 0) {
+    print $this->dropdown($id, $this->daysByNumber, $selected);
+  }
 
   function renderYearsPast($id, $selected = 0) {
     print $this->dropdown($id, $this->yearsPast, $selected);
