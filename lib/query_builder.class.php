@@ -55,13 +55,17 @@ class query_selectors {
   
   public function Where($relationships)
   {
-    $temp_array = array();
-    $this->_sql .= " WHERE ";
-    foreach ($relationships as $key => $value) {
-      array_push($temp_array, $key."='".$value."'");
+    if(is_array($relationships))
+    {
+      $temp_array = array();
+      $this->_sql .= " WHERE ";
+      foreach ($relationships as $key => $value) {
+        array_push($temp_array, $key."='".$value."'");
+      }
+      $this->_sql .= implode(" AND ", $temp_array);
+      return $this->_sql;
     }
-    $this->_sql .= implode(" AND ", $temp_array);
-    return $this->_sql;
+    else return $this->_sql .= " WHERE ".$relationships;
   }
   
 }
