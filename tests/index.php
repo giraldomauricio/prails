@@ -16,5 +16,5 @@ $test->Results();
 $parser = new JunitParser();
 $report = new report_ob();
 $results = $parser->parse($report, "results/results.xml");
-print_r($results);
+//print_r($results);
 ?>

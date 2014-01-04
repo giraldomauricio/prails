@@ -317,6 +317,38 @@ class prails extends context {
     $this->sql = "SELECT * FROM " . $this->_table . " WHERE " . $this->_key . " = " . $id;
     return $this->Query();
   }
+  
+  public function FindById($id)
+  {
+    return $this->GetOne($id);
+  }
+  
+  public function ParseDelta($delta)
+  {
+    $result = array();
+    if(strpos($delta, ":"))
+    {
+      $delta_array = explode(",", $delta);
+      foreach ($delta_array as $pair) {
+        $key_value = explode(":", $pair);
+        $result[$key_value[0]] = $key_value[1];
+      }
+    }
+    return $result;
+  }
+  
+  public function Find($delta,$fields = "*")
+  {
+    $temp_sql = array();
+    $delta = $this->ParseDelta($delta);
+    foreach ($delta as $key => $value) {
+      if(is_numeric($value)) array_push($temp_sql, $key."=".$value);
+      else array_push($temp_sql, $key."= '".htmlentities($value)."'");
+    }
+    $this->sql = "SELECT ".$fields." FROM ".$this->_table." WHERE ".implode(" AND ",$temp_sql);
+    $this->Query();
+  }
+  
 
   public function UpdateOne($id) {
     $d = $this->GetUpdateValues();

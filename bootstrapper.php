@@ -19,10 +19,15 @@ session_start();
 date_default_timezone_set('America/New_York');
 
 require_once realpath(dirname(__FILE__))."/hosts.php";
-// Load configuration file
+require_once realpath(dirname(__FILE__))."/lib/rescue.class.php";
+// Load configuration file based on the environment
+if(!isset($PRAILS_ENV))
+{
+  $PRAILS_ENV = $_SERVER["HTTP_HOST"];
+}
 try
 {
-  require_once $hosts[$_SERVER["HTTP_HOST"]];
+  require_once $hosts[$PRAILS_ENV];
 }  catch (Exception $e)
 {
   rescue::NoConfigurationAvailable();

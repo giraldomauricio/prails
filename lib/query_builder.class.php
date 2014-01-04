@@ -29,6 +29,13 @@ class query_builder {
     return $selector;
   }
   
+  public function Parse($var)
+  {
+    if(is_object($var)) return $var->_sql;
+    else return $var;
+  }
+
+
   public function Delete()
   {
     $this->_sql = "DELETE ";
@@ -66,6 +73,17 @@ class query_selectors {
       return $this->_sql;
     }
     else return $this->_sql .= " WHERE ".$relationships;
+  }
+  
+  public function WhereLinked($relationships)
+  {
+      $temp_array = array();
+      $this->_sql .= " WHERE ";
+      foreach ($relationships as $key => $value) {
+        array_push($temp_array, $key."=".$value."");
+      }
+      $this->_sql .= implode(" AND ", $temp_array);
+      return $this->_sql;
   }
   
 }

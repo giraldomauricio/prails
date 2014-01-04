@@ -1,4 +1,5 @@
 <?php
+$test->GroupTests("Routes Class");
 $route_class = new Routes();
 $_SERVER["QUERY_STRING"] = "";
 $route_class->AnalizeAndProcessRoutes();

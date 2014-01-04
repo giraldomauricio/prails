@@ -9,4 +9,6 @@ $hosts["www.vaporwave.net"] = "config/prod.php";
 $hosts["localhost"] = "config/dev.php";
 // Development
 $hosts["127.0.0.1"] = "config/dev.php";
+// Test
+$hosts["test"] = "config/test.php";
 ?>
