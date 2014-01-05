@@ -69,7 +69,7 @@ if ($_SERVER['HTTPS'] != "on" && SECURE) {
 
 // Load database driver
 require_once LIBRARY . "lib/Prails_iDB.interface.php";
-$db_driver_location = LIBRARY."drivers/prails_".DBTYPE.".class.php";
+$db_driver_location = LIBRARY."db/drivers/prails_".DBTYPE.".class.php";
 if(file_exists($db_driver_location))
 {
   require_once $db_driver_location;
