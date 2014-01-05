@@ -10,7 +10,7 @@
  *
  * @author murdock
  */
-class context {
+class context extends db_driver{
   
   var $db_resource;
   

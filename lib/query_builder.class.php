@@ -17,9 +17,35 @@ class query_builder {
   var $_relationships = array();
   var $_models = array();
   var $From;
+  var $_model;
   
   // $this->SelectAll()->FromTables($tables)->Where("field" => $value);
   
+  public function SelectAllRelated($tables, $fields = "*")
+  {
+    $this->_sql = "SELECT ".$fields." FROM ".$tables." WHERE ";
+    $where = array();
+    $tables_array = array_map('trim',explode(",",$tables));
+    foreach ($this->_relationships as $tablesNames => $fieldsMatch) {
+      $relationshipA = explode(":", $tablesNames);
+      $relationshipB = explode(":", $fieldsMatch);
+      if(in_array($relationshipA[0], $tables_array) && in_array($relationshipA[1], $tables_array))
+      {
+        array_push($where, $relationshipA[0].".".$relationshipB[0]." = ".$relationshipA[1].".".$relationshipB[1]);
+      }
+    }
+    $this->_sql .= implode(" AND ", $where);
+    return $this->_sql;
+  }
+  
+  public function SelectAllRelatedC($tables, $fields = "*")
+  {
+    $qs = new query_selectors();
+    $qs->_sql = $this->SelectAllRelated($tables, $fields);
+    return $qs;
+  }
+
+
   public function SelectAll($fields = "*")
   {
     if($fields != "*") $this->_sql = "SELECT ".implode(",", $fields);
@@ -84,6 +110,11 @@ class query_selectors {
       }
       $this->_sql .= implode(" AND ", $temp_array);
       return $this->_sql;
+  }
+  
+  public function Conditionals($conditions)
+  {
+    return $this->_sql .= " AND ".$conditions;
   }
   
 }

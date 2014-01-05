@@ -26,6 +26,11 @@ class rescue {
   {
     print "<div style=\"color:red\"><strong>Prails Error</strong></div><hr />The application has no default Action and Controller. Set them in the config file</i>].";
   }
+  
+  public static function NoDefaultDatabaseDriver()
+  {
+    print "<div style=\"color:red\"><strong>Prails Error</strong></div><hr />The application doesn't have a database driver available</i>].";
+  }
 }
 
 ?>

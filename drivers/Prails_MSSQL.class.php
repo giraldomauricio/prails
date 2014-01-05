@@ -6,13 +6,14 @@
  */
 
 /**
- * Description of Prails_MySQL
+ * Description of Prails_MSSQL
  *
  * @author murdock
  */
-class Prails_MySQL implements Prails_iDB {
+class db_driver implements Prails_iDB {
   
   var $db_resource;
+  var $db_type = "MSSQL";
   
   public function GetConnectionId($dbserver, $dbuser, $dbpassword, $dbname)
   {

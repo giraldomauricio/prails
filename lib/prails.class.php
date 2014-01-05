@@ -504,6 +504,18 @@ class prails extends context {
     else
       return $res;
   }
+  
+  public function Inspect($var)
+  {
+    if(!is_array($var))
+    {
+      $var = explode(",", $var);
+    }
+    foreach ($var as $value) {
+      print_r($$value);
+      print "\n";
+    }
+  }
 
 }
 

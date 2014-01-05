@@ -67,14 +67,28 @@ if ($_SERVER['HTTPS'] != "on" && SECURE) {
 // ###################################################################
 // Load all classes
 
-// Load base classes
+// Load database driver
 require_once LIBRARY . "lib/Prails_iDB.interface.php";
+$db_driver_location = LIBRARY."drivers/prails_".DBTYPE.".class.php";
+if(file_exists($db_driver_location))
+{
+  require_once $db_driver_location;
+}
+else{
+  rescue::NoDefaultDatabaseDriver();
+  break;
+}
+
+// Load base classes
+
 require_once LIBRARY . "lib/context.class.php";
 require_once LIBRARY . "lib/prails.class.php";
 require_once LIBRARY . "lib/log.php";
 require_once LIBRARY . "lib/utils.class.php";
 
 $architecture = array("lib", "app/models", "app/controllers");
+
+
 
 foreach ($architecture as $loader) {
 
