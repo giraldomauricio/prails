@@ -8,4 +8,5 @@ $delta = $prails->ParseDelta("a");
 $test->Assert($delta["a"] == null, "Test Parsing deltas with null");
 $delta = $prails->ParseDelta();
 $test->Assert($delta == null, "Test Parsing deltas with null");
+$test->Assert(strpos($db_driver_location, "prails_test.class.php") > 0, "Test Driver");
 ?>

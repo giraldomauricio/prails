@@ -13,7 +13,7 @@ class VerySimpleTests {
   var $lineCount = 0;
   var $ignoredTests = 0;
   var $ignore = false;
-  var $version = "1.8.0";
+  var $version = "1.8.1";
   var $xml = "";
   var $tests = array();
   var $test;
@@ -30,6 +30,12 @@ class VerySimpleTests {
     };
   }
   
+  public function IgnoreNextTest()
+  {
+    $this->ignore = true;
+  }
+
+
   public function Coverage($class)
   {
     $object = new ReflectionObject($class);

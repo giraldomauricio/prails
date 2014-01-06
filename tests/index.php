@@ -1,4 +1,5 @@
 <?php
+$PRAILS_ENV = "test";
 require_once "../bootstrapper.php";
 require_once "parser.php";
 $test = new VerySimpleTests();
