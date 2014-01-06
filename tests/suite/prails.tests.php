@@ -14,6 +14,8 @@ class demo_class extends prails
   var $id;
   var $_table = "person";
   var $_key = "id";
+  var $email;
+  var $name;
 }
 $obj_to_test = new demo_class();
 $obj_to_test->GetAll();
@@ -28,14 +30,12 @@ $obj_to_test->insert_id = 3;
 $test->Assert($obj_to_test->GetInsertId() == 3, "Test Prails Injection: Insert ID");
 $token = $obj_to_test->Tokenize();
 $test->Assert($obj_to_test->ValidateToken($token),"Test token validation");
-$test->GroupTests("Prails Fixtures and Recordsets");
-$recordset = $prails->LoadFixture("test");
-$test->AssertEqual($prails->GetRowsCount(),3,"Test fixture size");
-$test->Assert($prails->Load(),"Test fixture load one time");
-$test->AssertEqual($prails->email,"test@test.com","Test fixture record");
-$test->Assert($prails->Load(),"Test fixture load second time");
-$test->AssertEqual($prails->email,"test2@test.com","Test fixture record");
-$test->Assert($prails->Load(),"Test fixture load third time");
-$test->AssertEqual($prails->email,"test3@test.com","Test fixture record");
-$test->Assert(!$prails->Load(),"Test fixture load empty recordset");
+$test->Assert($prails->Enclose(1) == 1,"Test enclosing a number");
+$test->AssertEqual($prails->Enclose("Aa"),"'Aa'","Test enclosing a string");
+$test->AssertEqual($prails->Enclose("\""),"'&quot;'","Test enclosing with slashes");
+$_REQUEST["email"] = "foo";
+$_REQUEST["name"] = "bar";
+$test->Assert(in_array("email,name", $obj_to_test->GetInsertValues()),"Test Insert Values");
+$test->Assert(in_array("'foo','bar'", $obj_to_test->GetInsertValues()),"Test Insert Values");
+$test->AssertEqual("email = 'foo',name = 'bar'", $obj_to_test->GetUpdateValues(),"Test Update Values");
 ?>
