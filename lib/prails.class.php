@@ -445,8 +445,7 @@ class prails extends context {
    * @link http://prails.com/?/docs/find/tokenize
    */
   public function Tokenize() {
-    $token = explode(" ", microtime());
-    return sprintf('%04x-%08s-%08s-%04s-%04x%04x', $serverID, $this->clientIPToHex(), substr("00000000" . dechex($t[1]), -8), // get 8HEX of unixtime
+    $token = sprintf('%04x-%08s-%08s-%04s-%04x%04x', $serverID, $this->clientIPToHex(), substr("00000000" . dechex($t[1]), -8), // get 8HEX of unixtime
                     substr("0000" . dechex(round($t[0] * 65536)), -4), // get 4HEX of microtime
                     mt_rand(0, 0xffff), mt_rand(0, 0xffff));
     $_SESSION["prails_token"] = $token;

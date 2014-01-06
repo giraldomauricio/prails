@@ -13,7 +13,6 @@
 class db_driver implements Prails_iDB {
   
   var $db_resource;
-  var $db_type = "MySQL";
   
   public function GetConnectionId($dbserver, $dbuser, $dbpassword, $dbname)
   {

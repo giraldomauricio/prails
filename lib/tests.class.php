@@ -13,10 +13,11 @@ class VerySimpleTests {
   var $lineCount = 0;
   var $ignoredTests = 0;
   var $ignore = false;
-  var $version = "1.8.1";
+  var $version = "1.8.2";
   var $xml = "";
   var $tests = array();
   var $test;
+  var $trail = 90;
 
   public function __construct() {
     print "Very Simple PHP Test v " . $this->version . "</br>";
@@ -51,7 +52,7 @@ class VerySimpleTests {
   public function GroupTests($name)
   {
     $this->lineCount++;
-    $this->messages[$this->lineCount] = str_pad("=========Starting suite: ".$name, 80, "=", STR_PAD_RIGHT);
+    $this->messages[$this->lineCount] = str_pad("=========Starting suite: ".$name, $this->trail, "=", STR_PAD_RIGHT);
   }
 
   public function AssertEqual($actual, $expected, $name = "Test") {
@@ -62,20 +63,20 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if ($actual != $expected) {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": failed. Expected [" . $expected . "], actual: [" . $actual."]";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": failed. Expected [" . $expected . "], actual: [" . $actual."]";
       $this->errorCounter++;
       array_push($this->tests, $this->test);
       $this->test->success = false;
       $this->test->message = "Expected [" . $expected . "], actual: [" . $actual."]";
       return false;
     } else {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": passed.";
       array_push($this->tests, $this->test);
       return true;
     }
@@ -89,20 +90,20 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if (strpos($haystack, $needle)===false) {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": failed. Can't find [" . $needle . "], into: [" . $haystack."]";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": failed. Can't find [" . $needle . "], into: [" . $haystack."]";
       $this->errorCounter++;
       array_push($this->tests, $this->test);
       $this->test->success = false;
       $this->test->message = "Can't find [" . $needle . "], into: [" . $haystack."]";
       return false;
     } else {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": passed.";
       array_push($this->tests, $this->test);
       return true;
     }
@@ -116,13 +117,13 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if (!assert($assertion)) {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": failed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": failed.";
       $this->errorCounter++;
       array_push($this->tests, $this->test);
       $this->test->success = false;
@@ -130,11 +131,15 @@ class VerySimpleTests {
       $this->test->message = "Failed";
       return false;
     } else {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": passed.";
       $this->test->name = $name;
       array_push($this->tests, $this->test);
       return true;
     }
+  }
+  
+  public function AssertTrue($assertion, $name = "Test") {
+    $this->Assert($assertion, $name);
   }
 
   public function AssertNotNull($actual, $name = "Test") {
@@ -145,14 +150,14 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
 
     if (strlen($actual) <= 0) {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": failed. The value is empty";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": failed. The value is empty";
       $this->errorCounter++;
       $this->test->name = $name;
       array_push($this->tests, $this->test);
@@ -161,7 +166,7 @@ class VerySimpleTests {
       $this->test->message = "Value is empty";
       return false;
     } else {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": passed.";
       $this->test->name = $name;
       array_push($this->tests, $this->test);
       return true;
@@ -176,13 +181,13 @@ class VerySimpleTests {
     if ($this->ignore) {
       $this->ignoredTests++;
       $this->ignore = false;
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": ignored.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": ignored.";
       array_push($this->tests, $this->test);
       return true;
     }
     $this->testCount++;
     if ($actual == $expected) {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": failed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": failed.";
       $this->errorCounter++;
       $this->test->name = $name;
       array_push($this->tests, $this->test);
@@ -191,7 +196,7 @@ class VerySimpleTests {
       $this->test->message = "Failed";
       return false;
     } else {
-      $this->messages[$this->lineCount] = str_pad($name, 80, ".", STR_PAD_RIGHT) . ": passed.";
+      $this->messages[$this->lineCount] = str_pad($name, $this->trail, ".", STR_PAD_RIGHT) . ": passed.";
       array_push($this->tests, $this->test);
       return true;
     }
