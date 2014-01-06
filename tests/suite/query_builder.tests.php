@@ -1,5 +1,5 @@
 <?php
-$test->GroupTests("QueryNuilder Class");
+$test->GroupTests("QueryBuilder Class");
 $qb = new query_builder();
 $sql = $qb->SelectAll()->From(array("table"))->Where(array("a" => 1));
 $test->AssertEqual($sql, "SELECT * FROM table WHERE a='1'", "Test query builder");

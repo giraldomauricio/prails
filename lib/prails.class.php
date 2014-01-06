@@ -147,11 +147,6 @@ class prails extends context {
     print $this->_html;
   }
 
-  public function LoadFixture($fixture_name) {
-    include ROOT . "/db/fixtures/" . $fixture_name;
-    $this->_data_set = $data;
-  }
-
   public function GetAllDS() {
     return $this->_data_set;
   }

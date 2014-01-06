@@ -17,7 +17,7 @@ class demo_model extends prails{
   var $name;
   
   var $_table = "person";
-  var $_id = "id";
+  var $_key = "id";
   
 }
 
