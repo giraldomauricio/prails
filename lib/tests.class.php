@@ -34,6 +34,7 @@ class VerySimpleTests {
   public function IgnoreNextTest()
   {
     $this->ignore = true;
+    $this->testCount++;
   }
 
 
