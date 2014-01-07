@@ -55,7 +55,7 @@ class query_builder {
 
     public function SelectAll($fields = "*") {
         if ($fields != "*")
-            $this->_sql = "SELECT " . implode(",", $fields);
+            $this->_sql = "SELECT ".$fields;
         else
             $this->_sql = "SELECT *";
         $selector = new table_selectors($tables);
@@ -71,7 +71,7 @@ class query_builder {
     }
 
     public function Delete() {
-        $this->_sql = "DELETE ";
+        $this->_sql = "DELETE";
         $selector = new table_selectors($tables);
         $selector->_sql .= $this->_sql;
         return $selector;
@@ -93,6 +93,14 @@ class query_builder {
             rescue::ErrorInsertQuery ();
         }
     }
+    
+    public function Update($id)
+    {
+        $this->_sql = "UPDATE ".  $this->_table;
+        $qs = new update_value_selectors();
+        $qs->_sql = $this->_sql;
+        return $qs->Set($this->_model)." WHERE ".$this->_model->_key."=".$id;
+    }
 
     public static function string2Json($string) {
         $json = new stdClass();
@@ -110,12 +118,24 @@ class query_selectors {
 
     var $_sql;
 
+    public function Set($relationships) {
+        if(is_string($relationships)) $relationships = Utils::ParseDelta ($relationships);
+        $temp_array = array();
+        $this->_sql .= " SET ";
+        foreach ($relationships as $key => $value) {
+            array_push($temp_array, $key . "=" . $value . "");
+        }
+        $this->_sql .= implode(", ", $temp_array);
+        return $this->_sql;
+    }
+    
     public function Where($relationships) {
+        if(is_string($relationships)) $relationships = Utils::ParseDelta ($relationships);
         if (is_array($relationships)) {
             $temp_array = array();
             $this->_sql .= " WHERE ";
             foreach ($relationships as $key => $value) {
-                array_push($temp_array, $key . "='" . $value . "'");
+                array_push($temp_array, $key . "=" . Utils::Enclose($value) . "");
             }
             $this->_sql .= implode(" AND ", $temp_array);
             return $this->_sql;
@@ -124,6 +144,7 @@ class query_selectors {
     }
 
     public function WhereLinked($relationships) {
+        if(is_string($relationships)) $relationships = Utils::ParseDelta ($relationships);
         $temp_array = array();
         $this->_sql .= " WHERE ";
         foreach ($relationships as $key => $value) {
@@ -179,6 +200,35 @@ class insert_value_selectors {
             }
         }
         $this->_sql .= " (" . implode(",", $fields) . ") VALUES (" . implode(",", $values) . ")";
+        return $this->_sql;
+    }
+
+}
+
+class update_value_selectors {
+
+    var $_sql;
+
+    public function Set($delta) {
+        $fields = array();
+        if (is_string($delta)) {
+            $delta = Utils::ParseDelta($delta);
+            foreach ($delta as $key => $value) {
+                array_push($fields, $key."=".Utils::Enclose($value));
+            }
+        } else if (is_object($delta)) {
+            $class_vars = get_class_vars(get_class($delta));
+            foreach ($class_vars as $name => $value) {
+                if ($_REQUEST[$name] != "") {
+                    
+                    if (is_array($_REQUEST[$name]))
+                        array_push($fields, $name."=".Utils::Enclose(implode(",", $_REQUEST[$name])));
+                    else
+                        array_push($fields, $name."=".Utils::Enclose($_REQUEST[$name]));
+                }
+            }
+        }
+        $this->_sql .= " SET ".implode(",", $fields);
         return $this->_sql;
     }
 
