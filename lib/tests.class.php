@@ -208,7 +208,9 @@ class VerySimpleTests {
     print "Results</br>";
     print "-----------------------------------------</br>\n";
     foreach ($this->messages as $key => $value) {
-      print "&raquo; " . $value . "<br/>\n";
+      if(strpos($value, ": failed.")) print "<span style=\"color:red\"><strong>&raquo; " . $value . "</strong></span><br/>\n";
+      else if(strpos($value, ": ignored.")) print "<span style=\"color:blue\"><strong>&raquo; " . $value . "</strong></span><br/>\n";
+      else print "&raquo; " . $value . "<br/>\n";
     }
     print "-----------------------------------------</br>";
     print "Passed:" . ($this->testCount - $this->errorCounter - $this->ignoredTests) . "<br/>\n";

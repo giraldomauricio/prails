@@ -45,7 +45,7 @@ class db_driver implements Prails_iDB {
     public function GetRecordObject() {
         $sample = new stdClass();
         if ($this->record == null)
-            return $sample;
+            return false;
         else
         {
             if($this->row_pointer < count($this->record))

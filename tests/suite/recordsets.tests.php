@@ -36,4 +36,7 @@ $obj_to_test->GetOne(1);
 $test->AssertEqual($obj_to_test->sql,"SELECT * FROM person WHERE id = 1","Test search query Get One");
 $obj_to_test->FindById(1);
 $test->AssertEqual($obj_to_test->sql,"SELECT * FROM person WHERE id = 1","Test search query Get One Alias: Find By Id");
+$recordset = $prails->LoadFixture("test");
+$dataset = $prails->GetDataSet();
+$test->AssertEqual(count($dataset),3,"Test full dataset retrieval.");
 ?>

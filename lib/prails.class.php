@@ -273,12 +273,9 @@ class prails extends context {
 
   public function GetDataSet() {
     $result = array();
-    while (false !== ($this->field = $this->GetRecordObject())) {
-      /* $data_set = new stdClass();
-        foreach ($this->field as $key => $value) {
-        $data_set->$key = $value;
-        } */
-      array_push($result, $this->field);
+    for($i=0;$i<$this->GetRowsCount();$i++)
+    {
+      array_push($result, $this->GetRecordObject());
     }
     return $result;
   }
