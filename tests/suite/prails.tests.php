@@ -19,7 +19,7 @@ class demo_class extends prails
 }
 $obj_to_test = new demo_class();
 $obj_to_test->GetAll();
-$test->Assert($obj_to_test->sql == "SELECT * FROM person", "Test Prails Queries: GetAll");
+$test->AssertEqual($obj_to_test->sql,"SELECT * FROM person", "Test Prails Queries: GetAll");
 $obj_to_test->GetOne(1);
 $test->Assert($obj_to_test->sql == "SELECT * FROM person WHERE id = 1", "Test Prails Queries: GetOne");
 $obj_to_test->rows_count = 1;

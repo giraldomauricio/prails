@@ -402,6 +402,40 @@ class Utils {
 
     return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
   }
+  
+  public static function ParseDelta($delta)
+  {
+    $result = array();
+    if(strpos($delta, ":"))
+    {
+      $delta_array = explode(",", $delta);
+      foreach ($delta_array as $pair) {
+        $key_value = explode(":", $pair);
+        $result[$key_value[0]] = $key_value[1];
+      }
+    }
+    return $result;
+  }
+  
+  public static function Inspect($var)
+  {
+    if(!is_array($var))
+    {
+      $var = explode(",", $var);
+    }
+    foreach ($var as $value) {
+      print_r($$value);
+      print "\n";
+    }
+  }
+  
+  public static function Enclose($data) {
+    if (is_numeric($data))
+      return $data;
+    else {
+      return "'" . addslashes(htmlentities($data)) . "'";
+    }
+  }
 
 }
 

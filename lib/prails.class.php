@@ -55,7 +55,7 @@ class prails extends context {
     an API via Ajax (Requires jQuery).
    */
 
-  public function RunCMS() {
+    public function RunCMS() {
     foreach ($this->_contents as $key => $value) {
       $this->_html = str_replace("{".$this->_cms_tag.":" . $key . ":".$this->_cms_tag."}", $value, $this->_html);
     }
@@ -243,23 +243,19 @@ class prails extends context {
 
   public function GetLastId() {
     $this->last_id = $this->GetInsertId();
-    //$this->last_id = mysql_insert_id();
     return $this->last_id;
   }
 
   public function Lines() {
     $this->recordCount = $this->GetRowsCount();
-    //$this->recordCount = mysql_num_rows($this->RES) or print(mysql_error());
     return $this->recordCount;
   }
 
   public function Affected() {
     return $this->GetRowsAffected();
-    //return mysql_affected_rows($this->RES);
   }
 
   public function Load() {
-    //$this->field = mysql_fetch_object($this->RES);
     $this->field = $this->GetRecordObject();
     if ($this->field) {
       foreach ($this->field as $key => $value) {
@@ -289,11 +285,10 @@ class prails extends context {
   }
 
   public function InsertOne() {
-    $d = $this->GetInsertValues();
-    $this->sql = "INSERT INTO " . $this->_table . " (" . $d[0] . ") VALUES (" . $d[1] . ")";
+      $qb = new query_builder($this);
+      $this->sql = $qb->Insert();
     if ($this->Query()) {
       $this->lastID = $this->GetInsertId();
-      //$this->lastID = mysql_insert_id();
       return $this->lastID;
     }
     else
@@ -301,7 +296,9 @@ class prails extends context {
   }
 
   public function GetAll() {
-    $this->sql = "SELECT * FROM " . $this->_table;
+    $qb = new query_builder($this);
+    //$this->sql = "SELECT * FROM " . $this->_table;
+    $this->sql = $qb->Parse($qb->SelectAll()->From($this->_table));
     return $this->Query();
   }
 
@@ -317,16 +314,7 @@ class prails extends context {
   
   public function ParseDelta($delta)
   {
-    $result = array();
-    if(strpos($delta, ":"))
-    {
-      $delta_array = explode(",", $delta);
-      foreach ($delta_array as $pair) {
-        $key_value = explode(":", $pair);
-        $result[$key_value[0]] = $key_value[1];
-      }
-    }
-    return $result;
+    return Utils::ParseDelta($delta);
   }
   
   public function Find($delta,$fields = "*")
@@ -369,11 +357,7 @@ class prails extends context {
   }
 
   public function Enclose($data) {
-    if (is_numeric($data))
-      return $data;
-    else {
-      return "'" . addslashes(htmlentities($data)) . "'";
-    }
+      return Utils::Enclose($data);
   }
 
   public function GetUpdateValues() {
@@ -496,17 +480,7 @@ class prails extends context {
       return $res;
   }
   
-  public function Inspect($var)
-  {
-    if(!is_array($var))
-    {
-      $var = explode(",", $var);
-    }
-    foreach ($var as $value) {
-      print_r($$value);
-      print "\n";
-    }
-  }
+  
 
 }
 

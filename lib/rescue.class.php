@@ -36,6 +36,11 @@ class rescue {
   {
     print "<div style=\"color:red\"><strong>Prails Fixture Error</strong></div><hr />The application cant load the fixture file</i>].";
   }
+  
+  public static function ErrorInsertQuery()
+  {
+    print "<div style=\"color:red\"><strong>Prails Query Builder Error</strong></div><hr />There is no table defined</i>].";
+  }
 }
 
 ?>
