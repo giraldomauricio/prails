@@ -20,5 +20,10 @@ ob_start();
 include ROOT.'index.php';
 $results = ob_get_contents();
 ob_end_clean();
-$test->AssertEqual($results,"Hello","Test Prails Core MVC");
+$test->AssertEqual($results,"Hello","Test Prails Core MVC via Index");
+ob_start();
+App::Run();
+$results = ob_get_contents();
+ob_end_clean();
+$test->AssertEqual($results,"Hello","Test Prails Core MVC via Class");
 ?>
