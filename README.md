@@ -1,28 +1,62 @@
-prails
-======
+PRAILS
+
 
 You can call it Php On Rails. Php Rails. PHPoR. But all those name are taken somehow. So I decided to come
 with a closer, but unused approach: PRAILS.
 
 Prails is a Rails inspired PHP MVC Framework. Instead of bringing a heavyweight
 set of classes and assets, this framework is very simple but works just as any other one.
-You can start with your own models or you can create your own. Support for MySQL and fixtures
+You can start with your own predefined models or you can create your own from scratch. Support for MySQL and fixtures
 come out of the box. Support for other databases is coming in the near future. Full
 support for Fat Controllers or Fat Models. You choose. Support for private and public pages is 
 included, so you don't have to mix everything under one view directory. Templates support is
 included, so you can rely on a single page to do your UI.
 
-Since it runs over PHP 5, the compatibility is only limited by PHP itself. That means it runs in Linux, Windows, Mac, etc.
+Since it runs over PHP 5, the compatibility is only limited by PHP itself (In short terms, there is no limit). That also means it runs in Linux, Windows, Mac, etc.
 
 It comes with its own test class to avoid the installation of additional test frameworks. The results
 are jUnit compatible if you want to integrate the project with automated builders. Just point your
 parser to tests/results and your done. 
 
+STRONG DATA FRAMEWORK
+
+Prails come with a very simple and yet powerful data framework that lets you:
+
+Connect to MySQL.
+
+Inject other databases.
+
+Create visual fixtures in test mode. No database required.
+
+Edit fixtures on the fly for testing. Again, no database required.
+
+Database migrations.
+
+Code-First.
+
+Own Query Language
+
+
+
+HOW TO SEE IF MY PRAILS INSTALLATION IS WORKING
+
+Prails comes with its own test class to avoid the installation of additional test frameworks. The results
+are jUnit compatible if you want to integrate the project with automated builders. Just point your
+parser to tests/results and your done.
+
+To see if your system is compatible and if Prails is working fine, just run the tests by calling them via your web browser:
+
+http://localhost/application_path/tests/
+
+Don't forget to not to publish your tests when going to production.
+
+IS PRAILS PRODUCTION READY Yes, there are already applications in production running in Prails.
+
 GETTING STARTED:
 
 The easiest way to get started with PRAILS is to write the basic “Hello World”, the “Prails” way.
 
-Step 1: Create your model.<br />
+Step 1: Create your model
 
 In the directory “/app/models” lets create the file hello.model.php (The naming is optional):
 
@@ -32,7 +66,7 @@ class hello_model{
 We will only need a basic variable and no methods. 
 
 class hello_model{
-	var $name;
+  var $name;
 }
 
 Step 2: Create your controller
@@ -42,23 +76,24 @@ In the directory “/app/controllers” lets create the file hello.controller.ph
 class hello_controller{
 
 public function __construct() {
-    		$this->DynamicCall();
-  	}
+    $this->DynamicCall(); 
+  }
 }
 
 All controllers must be initialized with this construction method in order to inherit the full variable capture of the framework.
+
+
 Now lets create an action called “world” that sets a variable “response” and then calls the Prails RenderView method:
 
 class hello_controller{
 
 public function __construct() {
-    		$this->DynamicCall();
-  	}
+  $this->DynamicCall();
+}
 
 public function world() {
-    		$this->response = “Hello world”;
-return $this->RenderView();
-  	}
+  $this->response = “Hello world”;
+  return $this->RenderView();
 }
 
 Step 3: Create your view
@@ -67,7 +102,7 @@ In the directory “/app/views” lets create the file world.php (The naming is 
 
 <html>
 <body>
-	<? print $this->response?>
+<? print $this->response?>
 </body>
 </html>
 
@@ -86,6 +121,5 @@ TODO LIST:
 a) Self creating command: create the structure of the application with a PHP command.
 b) Model and Controller generation from existing databases.
 c) Scaffolding.
-d) Database migrations.
 e) Online documentation.
-f) PRQL: PRails Query Language.
+

@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<style type="text/css">
+.code_view {
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
+	font-size: medium;
+	color: #012FFF;
+}
+</style>
+</head>
+
+<body style="font-family:'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans', Verdana, sans-serif">
+<p><strong>PRAILS</strong><br></p>
+<hr/>
+<p>You can call it Php On Rails. Php Rails. PHPoR. But all those name are taken somehow. So I decided to come<br>
+  with a closer, but unused approach: PRAILS.</p>
+<p>Prails is a Rails inspired PHP MVC Framework. Instead of bringing a heavyweight<br>
+  set of classes and assets, this framework is very simple but works just as any other one.<br>
+  You can start with your own predefined models or you can create your own from scratch. Support for MySQL and fixtures<br>
+  come out of the box. Support for other databases is coming in the near future. Full<br>
+  support for Fat Controllers or Fat Models. You choose. Support for private and public pages is <br>
+  included, so you don't have to mix everything under one view directory. Templates support is<br>
+  included, so you can rely on a single page to do your UI.</p>
+<p>Since it runs over PHP 5, the compatibility is only limited by PHP itself (In short terms, there is no limit). That also means it runs in Linux, Windows, Mac, etc.</p>
+<p>It comes with its own test class to avoid the installation of additional test frameworks. The results<br>
+  are jUnit compatible if you want to integrate the project with automated builders. Just point your<br>
+  parser to tests/results and your done. </p>
+<p><strong>STRONG DATA FRAMEWORK</strong></p>
+<p>Prails come with a very simple and yet powerful data framework that lets you:</p>
+<ul>
+  <li>Connect to MySQL.</li>
+  <li>Inject other databases.</li>
+  <li>Create visual fixtures in test mode. No database required.</li>
+  <li>Edit fixtures on the fly for testing. Again, no database required.</li>
+  <li>Database migrations.</li>
+  <li>Code-First.</li>
+  <li>Own Query Language</li>
+</ul>
+<p><strong>HOW TO SEE IF MY PRAILS INSTALLATION IS WORKING</strong></p>
+<p>Prails comes with its own test class to avoid the installation of additional test frameworks. The results<br>
+are jUnit compatible if you want to integrate the project with automated builders. Just point your<br>
+parser to tests/results and your done.</p>
+<p>To see if your system is compatible and if Prails is working fine, just run the tests by calling them via your web browser:</p>
+<p><span class="code_view">http://localhost/application_path/tests/</span></p>
+<p>Don't forget to not to publish your tests when going to production.<strong></strong></p>
+<strong>IS PRAILS PRODUCTION READY</strong>
+<p>Yes, there are already applications in production running in Prails.</p>
+<p><strong>GETTING STARTED:</strong></p>
+<p>The easiest way to get started with PRAILS is to write the basic “Hello World”, the “Prails” way.</p>
+<p>Step 1: Create your model</p>
+<p>In the directory “/app/models” lets create the file hello.model.php (The naming is optional):</p>
+<p class="code_view">class hello_model{<br>
+  }</p>
+<p>We will only need a basic variable and no methods. </p>
+<p class="code_view">class hello_model{<br>
+  &nbsp;&nbsp;var $name;<br>
+  }</p>
+<p>Step 2: Create your controller</p>
+<p>In the directory “/app/controllers” lets create the file hello.controller.php (The naming is optional):</p>
+<p class="code_view">class hello_controller{</p>
+<p class="code_view">public function __construct() {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;DynamicCall();
+  <br>
+  &nbsp;&nbsp;}<br>
+  }</p>
+<p>All controllers must be initialized with this construction method in order to inherit the full variable capture of the framework.</p>
+<p><br>
+  Now lets create an action called “world” that sets a variable “response” and then calls the Prails RenderView method:</p>
+<p>class hello_controller{</p>
+<p class="code_view">public function __construct() {<br>
+  &nbsp;&nbsp;$this-&gt;DynamicCall();<br>
+  }</p>
+<p class="code_view">public function world() {<br>
+  &nbsp;&nbsp;$this-&gt;response = “Hello world”;<br>
+  &nbsp;&nbsp;return $this-&gt;RenderView();<br>
+  }</p>
+<p>Step 3: Create your view</p>
+<p>In the directory “/app/views” lets create the file world.php (The naming is strict, and matches the action if you expect Prails to render the action result):</p>
+<p class="code_view">&lt;html&gt;<br>
+  &lt;body&gt;<br>
+  &lt;? print $this-&gt;response?&gt;<br>
+  &lt;/body&gt;<br>
+  &lt;/html&gt;</p>
+<p>Step 4: Run your application</p>
+<p>If you have the application running in your server, go to the following URL:</p>
+<p class="code_view">http://localhost/application_path/?hello/world</p>
+<p>You must see:</p>
+<p><em>Hello world</em></p>
+<p>TODO LIST:</p>
+<p>a) Self creating command: create the structure of the application with a PHP command.<br>
+  b) Model and Controller generation from existing databases.<br>
+  c) Scaffolding.<br>
+  e) Online documentation.</p>
+</body>
+</html>
