@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<testsuites errors="0" failures="0" skipped="3" tests="63" time="0.008427" timestamp="2014-01-09 EST 10:21:16">
-		<testsuite name="Very Simple Test Suite" tests="63" errors="0" failures="0" skipped="0">
+	<testsuites errors="0" failures="0" skipped="3" tests="70" time="0.023262" timestamp="2014-01-14 EST 06:05:05">
+		<testsuite name="Very Simple Test Suite" tests="70" errors="0" failures="0" skipped="0">
 		<properties/>
+			<testcase name="Test" time="0.00">
+		</testcase>
 			<testcase name="Test environment is set by default" time="0.00">
 		</testcase>
 			<testcase name="Test architectures" time="0.00">
@@ -126,7 +128,19 @@
 		</testcase>
 			<testcase name="Test QS empty var f" time="0.00">
 		</testcase>
-			<testcase name="Test Prails Core MVC" time="0.00">
+			<testcase name="Test PrailsApp var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsController var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsModel var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsViews var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsRoot var" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Core MVC via Index" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Core MVC via Class" time="0.00">
 		</testcase>
 	</testsuite>
 </testsuites>
