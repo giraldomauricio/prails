@@ -47,5 +47,10 @@ class db_driver implements Prails_iDB {
   {
     return mysql_fetch_object($this->db_resource);
   }
+  
+  public function ResetRecord()
+  {
+    mysql_data_seek($this->RES, 0);
+  }
 }
 ?>

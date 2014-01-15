@@ -56,6 +56,11 @@ class db_driver implements Prails_iDB {
             else return false;
         }
     }
+    
+    public function ResetRecord()
+    {
+      $this->row_pointer = -1;
+    }
 
 }
 

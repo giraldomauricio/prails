@@ -1,7 +1,12 @@
 <?php
 $test->GroupTests("Prails Fixtures and Recordsets");
 $recordset = $prails->LoadFixture("test");
+$prails->QueryAndLoad();
+$test->AssertEqual($prails->email,"test@test.com","Test fixture record after load");
+$test->AssertTrue($prails->Query(),"Test Query");
+$recordset = $prails->Reset();
 $test->AssertEqual($prails->GetRowsCount(),3,"Test fixture size");
+$test->AssertEqual($prails->Count(),3,"Test fixture size using count");
 $test->Assert($prails->Load(),"Test fixture load one time");
 $test->AssertEqual($prails->email,"test@test.com","Test fixture record");
 $test->Assert($prails->Load(),"Test fixture load second time");

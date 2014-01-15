@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<testsuites errors="0" failures="0" skipped="3" tests="70" time="0.023262" timestamp="2014-01-14 EST 06:05:05">
-		<testsuite name="Very Simple Test Suite" tests="70" errors="0" failures="0" skipped="0">
+	<testsuites errors="0" failures="0" skipped="3" tests="73" time="0.007386" timestamp="2014-01-14 EST 11:16:16">
+		<testsuite name="Very Simple Test Suite" tests="73" errors="0" failures="0" skipped="0">
 		<properties/>
 			<testcase name="Test" time="0.00">
 		</testcase>
@@ -70,7 +70,13 @@
 		</testcase>
 			<testcase name="Test query builder smart update" time="0.00">
 		</testcase>
+			<testcase name="Test fixture record after load" time="0.00">
+		</testcase>
+			<testcase name="Test Query" time="0.00">
+		</testcase>
 			<testcase name="Test fixture size" time="0.00">
+		</testcase>
+			<testcase name="Test fixture size using count" time="0.00">
 		</testcase>
 			<testcase name="Test fixture load one time" time="0.00">
 		</testcase>
