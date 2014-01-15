@@ -1,12 +1,12 @@
 <?php
 $test->GroupTests("Prails Class");
 $prails = new prails();
-$delta1 = $prails->ParseDelta("a:1,b:c");
+$delta1 = Utils::ParseDelta("a:1,b:c");
 $test->Assert($delta1["a"] == 1, "Test Parsing deltas with integers");
 $test->Assert($delta1["b"] == "c", "Test Parsing deltas with strings");
-$delta2 = $prails->ParseDelta("a");
+$delta2 = Utils::ParseDelta("a");
 $test->Assert($delta2["a"] == null, "Test Parsing deltas with null");
-$delta3 = $prails->ParseDelta();
+$delta3 = Utils::ParseDelta();
 $test->Assert($delta3 == null, "Test Parsing deltas with null");
 $test->Assert(strpos($db_driver_location, "prails_test.class.php") > 0, "Test Driver");
 class demo_class extends prails
@@ -16,8 +16,11 @@ class demo_class extends prails
   var $_key = "id";
   var $email;
   var $name;
+  var $phone;
 }
 $obj_to_test = new demo_class();
+$obj_to_test->_constraints = "email:string,name:string,phone:integer";
+$obj_to_test->_required = "email";
 $obj_to_test->GetAll();
 $test->AssertEqual($obj_to_test->sql,"SELECT * FROM person", "Test Prails Queries: GetAll");
 $obj_to_test->GetOne(1);
@@ -30,15 +33,14 @@ $obj_to_test->insert_id = 3;
 $test->Assert($obj_to_test->GetInsertId() == 3, "Test Prails Injection: Insert ID");
 $token = $obj_to_test->Tokenize();
 $test->Assert($obj_to_test->ValidateToken($token),"Test token validation");
-$test->Assert($prails->Enclose(1) == 1,"Test enclosing a number");
-$test->AssertEqual($prails->Enclose("Aa"),"'Aa'","Test enclosing a string");
-$test->AssertEqual($prails->Enclose("\""),"'&quot;'","Test enclosing with slashes");
+$test->Assert(Utils::Enclose(1) == 1,"Test enclosing a number");
+$test->AssertEqual(Utils::Enclose("Aa"),"'Aa'","Test enclosing a string");
+$test->AssertEqual(Utils::Enclose("\""),"'&quot;'","Test enclosing with slashes");
 $_REQUEST["email"] = "foo";
 $_REQUEST["name"] = "bar";
-$test->IgnoreNextTest();
-$test->Assert(in_array("email,name", $obj_to_test->GetInsertValues()),"Test Insert Values");
-$test->IgnoreNextTest();
-$test->Assert(in_array("'foo','bar'", $obj_to_test->GetInsertValues()),"Test Insert Values");
-$test->IgnoreNextTest();
-$test->AssertEqual("email = 'foo',name = 'bar'", $obj_to_test->GetUpdateValues(),"Test Update Values");
+$_REQUEST["phone"] = "333A";
+$test->Assert(!$obj_to_test->IsValid(),"Test Model Validity False");
+$test->AssertContains($obj_to_test->_errors[0]->message,"Constraint","Test Model Validity Error Message");
+$_REQUEST["phone"] = 333;
+$test->Assert($obj_to_test->IsValid(),"Test Model Validity True");
 ?>

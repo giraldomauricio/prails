@@ -40,12 +40,12 @@ class prails extends context {
     var $_layout = "layout";
     var $_assets = array();
     var $_types = array();
-    var $_required = array();
     var $_db;
     var $_token;
     var $_cms = false;
     var $_cms_tag = "tag";
     var $_contents;
+    var $_errors = array();
 
     /**
     * Index is the default main action when no Controller is declared.
@@ -239,6 +239,8 @@ class prails extends context {
     /**
     * Sends the SQL command to the database and loads the record at the same time.
     * For security reasons, the query evaluates if the command does not affects the structure.
+    * 
+    * @param string $sql Optional The query to execute
     *
     * @return boolean true if the query is executed succesfully, false if returns an error.
     */
@@ -257,6 +259,7 @@ class prails extends context {
     * Sends the SQL command to the database.
     * For security reasons, the query evaluates if the command does not affects the structure.
     *
+    * @param string $sql Optional The query to execute
     * @return boolean true if the query is executed succesfully, false if returns an error.
     */
     public function Query($sql = "") {
@@ -272,25 +275,41 @@ class prails extends context {
             return false;
     }
 
+    /**
+    * Counts the number of records in the recordset
+    *
+    * @return int The number of records
+    */
     public function Count() {
         $this->recordCount = $this->GetRowsCount();
         return $this->recordCount;
     }
 
+    /**
+    * Returns the ID (Primary Key) of the last inserted records from the current session
+    *
+    * @return int The record ID (Primary Key)
+    */
     public function GetLastId() {
         $this->last_id = $this->GetInsertId();
         return $this->last_id;
     }
 
-    public function Lines() {
-        $this->recordCount = $this->GetRowsCount();
-        return $this->recordCount;
-    }
-
+    /**
+    * Returns the number of records affected by the last query of the current session
+    *
+    * @return int The number of records affected
+    */
     public function Affected() {
         return $this->GetRowsAffected();
     }
 
+    /**
+    * Tries to load the next available record in the recordset.
+    * At the same time, the object is loaded with the fields in the corresponding properties.
+    *
+    * @return boolean True if the record was loaded, false if there are no more records to load
+    */
     public function Load() {
         $this->field = $this->GetRecordObject();
         if ($this->field) {
@@ -302,10 +321,20 @@ class prails extends context {
             return false;
     }
     
+    /**
+    * Returns the recorset pointer to the beginning
+    *
+    * @return void
+    */
     public function Reset() {
         $this->ResetRecord();
     }
 
+    /**
+    * Returns the entire recordset in a single object
+    *
+    * @return Object The recordset
+    */
     public function GetDataSet() {
         $result = array();
         for ($i = 0; $i < $this->GetRowsCount(); $i++) {
@@ -314,14 +343,11 @@ class prails extends context {
         return $result;
     }
 
-    public function GetParameters() {
-        $class_vars = get_class_vars(get_class($this));
-        foreach ($class_vars as $name => $value) {
-            $this->data[$name] = $_REQUEST[$name];
-        }
-        return true;
-    }
-
+    /**
+    * Inserts one record into the database based on the input values
+    *
+    * @return boolean True if the query was successful
+    */
     public function InsertOne() {
         $qb = new query_builder($this);
         $this->sql = $qb->Insert();
@@ -332,96 +358,105 @@ class prails extends context {
             return false;
     }
 
+    /**
+    * Returns all the records of the active model
+    *
+    * @return Object The poiter to the recordset
+    */
     public function GetAll() {
         $qb = new query_builder($this);
         $this->sql = $qb->Parse($qb->SelectAll()->From($this->_table));
         return $this->Query();
     }
 
+    /**
+    * Returns the record where the key matches the valie provided
+    *
+    * @param int $id The id (Primary Key) of the record
+    * 
+    * @return Object The recordset
+    */
     public function GetOne($id) {
         $qb = new query_builder($this);
         $this->sql = $qb->SelectAll()->From($this->_table)->Where(array($this->_key => $id));
         return $this->Query();
     }
 
+    /**
+    * Alias of GetOne
+    *
+    * @param int $id The id (Primary Key) of the record
+    * 
+    * @return Object The recordset
+    */
     public function FindById($id) {
         return $this->GetOne($id);
     }
-
-    public function ParseDelta($delta) {
-        return Utils::ParseDelta($delta);
-    }
-
+    
+    /**
+    * Finds a record based on a delta definition
+    *
+    * @param string $delta The delta of fields to find. Deltas are defines the following way: id:1, name:"John"
+    * @param string $fields Optional The fields to select in the query
+    * 
+    * @return void
+    */
     public function Find($delta, $fields = "*") {
         $qb = new query_builder($this);
         $this->sql = $qb->SelectAll($fields)->From($this->_table)->Where($delta);
         $this->Query();
     }
 
+    /**
+    * Updates one record into the database based on the input values and the id (Primary key) specified
+    *
+    * @param int The id (Primary key) of the record to update 
+    * 
+    * @return boolean True if the query was successful
+    */
     public function UpdateOne($id) {
         $qb = new query_builder($this);
         $this->sql = $qb->Update($id);
         return $this->Query();
     }
 
+    /**
+    * Deletes one record into the database based on the id (Primary key) specified
+    *
+    * @param int The id (Primary key) of the record to update 
+    * 
+    * @return boolean True if the query was successful
+    */
     public function DeleteOne($id) {
         $qb = new query_builder($this);
         $this->sql = $qb->Delete()->From($this->_table)->Where($this->_key . ":" . $id);
         return $this->Query();
     }
-
-    // TODO: Deprecated
-    public function GetInsertValues() {
-        $class_vars = get_class_vars(get_class($this));
-        foreach ($class_vars as $name => $value) {
-            if ($_REQUEST[$name] != "") {
-                $keys .= $name . ",";
-                if (is_array($_REQUEST[$name]))
-                    $values .= $this->Enclose(implode(",", $_REQUEST[$name])) . ",";
-                else
-                    $values .= $this->Enclose($_REQUEST[$name]) . ",";
-            }
-        }
-        return array(substr($keys, 0, -1), substr($values, 0, -1));
-    }
-
-    public function Enclose($data) {
-        return Utils::Enclose($data);
-    }
-
-    // TODO: Deprecated
-    public function GetUpdateValues() {
-        $sets = "";
-        $class_vars = get_class_vars(get_class($this));
-        foreach ($class_vars as $name => $key) {
-            if ($_REQUEST[$name] != "") {
-                if (is_array($_REQUEST[$name]))
-                    $sets .= $name . " = " . $this->Enclose(implode(",", $_REQUEST[$name])) . ",";
-                else
-                    $sets .= $name . " = " . $this->Enclose($_REQUEST[$name]) . ",";
-            }
-            if (is_numeric($_REQUEST[$name]) && $_REQUEST[$name] == 0)
-                $sets .= $name . " = 0 ,";
-        }
-        return substr($sets, 0, -1);
-    }
+    
 
     /**
-     * (Prails 1.0)<br/>
-     * Checks whether a model is valid
-     * @link http://prails.com/?/docs/find/isvalid
-     * @param None <p>
-     * Object is received via POST
-     * </p>
-     * <p>
-     * @return bool true if the model is valid; false otherwise.
-     * </p>
-     */
+    * Checks if a model is valid based on the constraints and requirements
+    * 
+    * @return boolean True if the model is valid
+    */
     public function IsValid() {
         $result = true;
-        foreach ($this->_required as $field) {
-            if ($_POST[$field] == "")
+        // Check requirements
+        $required = explode(",", $this->_required);
+        foreach ($required as $field) {
+            if ($_REQUEST[$field] == ""){
+                $this->Error("Model Validation Error: Requirement",$field." is required.");
                 $result = FALSE;
+            }
+        }
+        // Check constraints
+        $constraints = Utils::ParseDelta($this->_constraints);
+        foreach ($constraints as $field => $contraint) {
+            if (gettype($_REQUEST[$field]) != $contraint)
+            {
+                $this->Error("Model Validation Error: Constraint",$field." has to be ".$contraint.". Given value is [".$_REQUEST[$field]."], wich is ".gettype($_REQUEST[$field]));
+                $result = FALSE;
+            }
         }
         return $result;
     }
@@ -530,6 +565,18 @@ class prails extends context {
             fpassthru($fp);
             exit;
         }
+    }
+    
+    public function Error($message, $detail = "")
+    {
+        $error = new PrailsErrors();
+        $error->class = __CLASS__;
+        $error->file = __FILE__;
+        $error->line = __LINE__;
+        $error->method = __METHOD__;
+        $error->message = $message;
+        $error->detail = $detail;
+        array_push($this->_errors, $error);
     }
 
 }

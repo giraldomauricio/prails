@@ -14,6 +14,9 @@ class context extends db_driver {
 
     var $_table;
     var $_key;
+    //TODO: Apply constraints to validate models
+    var $_constraints;
+    var $_required = array();
 
 //  var $db_resource;
 //  
