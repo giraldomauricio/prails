@@ -1,6 +1,7 @@
 <?php
 
 $core = new demo_controller();
+$core->
 $core->_html = "Hello";
 ob_start();
 $core->Render();

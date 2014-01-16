@@ -44,6 +44,31 @@ class HtmlHelper {
     return $html;
   }
   
+  public function DropDown($field_name, $id_field, $label_field, $default = 0) {
+        $validator = 0;
+        $res = "";
+        $selected = "";
+        $res .= "<select name=\"" . $field_name . "\" id=\"" . $field_name . "\"";
+        if ($this->onChange != "")
+            $res .= " onChange=\"" . $this->onChange . "\"";
+        $res .= " >\n";
+        $res .= "<option value=\"\">Please select...</option>\n";
+        while ($this->load()) {
+            $validator++;
+            if ($this->field->$id_field == $default)
+                $selected = " selected";
+            else
+                $selected = "";
+            $res .= "<option value=\"" . $this->field->$id_field . "\"" . $selected . ">" . $this->field->$label_field . "</option>\n";
+        }
+        $res .= "</select>\n";
+        //if($validator==0) return "No records available.";
+        if ($validator == 0)
+            return "&nbsp;";
+        else
+            return $res;
+    }
+  
 }
 
 ?>
