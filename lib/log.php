@@ -66,10 +66,6 @@ class logFactory {
         {
             print (str_pad(date("Y-m-d h:i:s"), 20)." -- ".str_pad($class, 20)." +++ LOG   +++ ".$message."\n<br />");
         }
-        if(VISUAL_ERRORS)
-        {
-          alert($message);
-        }
     }
     
     public static function splunk($message)

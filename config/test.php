@@ -21,9 +21,9 @@ $debug         = false;
 $verbose       = false;
 $visual_errors = false;
 // Email
-$from_email    = "info@vaporwave.net";
+$from_email    = "info@prails.net";
 $templates     = "/Library/WebServer/Documents/prails/templates/";
-$adminEmail    = "vaporwavemiami@aol.com";
+$adminEmail    = "info@prails.com";
 // Default controller and action
 $default_controller = "prails";
 $default_action    = "index";

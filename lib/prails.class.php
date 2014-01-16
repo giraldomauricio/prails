@@ -658,6 +658,7 @@ class prails extends context {
     */
     public function Error($message, $detail = "")
     {
+        $logger = new logFactory();
         $error = new PrailsErrors();
         $error->class = __CLASS__;
         $error->file = __FILE__;
@@ -666,6 +667,7 @@ class prails extends context {
         $error->message = $message;
         $error->detail = $detail;
         array_push($this->_errors, $error);
+        logFactory::error(__CLASS__, $message);
     }
 
 }
