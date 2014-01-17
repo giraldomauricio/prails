@@ -50,6 +50,13 @@ class prails extends context {
     var $_table = "";
     
     /**
+    * Database identifier for the primary key
+    *
+    * @var integer
+    */
+    var $_key = "";
+    
+    /**
     * Database identifier for a record
     *
     * @var integer
