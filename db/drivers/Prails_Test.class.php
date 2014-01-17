@@ -61,6 +61,14 @@ class db_driver implements Prails_iDB {
     {
       $this->row_pointer = -1;
     }
+    
+    public function CheckIfTableExists($table_name) {
+        return true;
+    }
+
+    public function GetDatabaseTables() {
+        return true;
+    }
 
 }
 

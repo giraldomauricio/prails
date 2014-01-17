@@ -23,8 +23,8 @@
  * 1) Post and Get can be handled by the controller (Postback) or by
  * an API via Ajax (Requires jQuery).
  * 
- * @param string _version Prails version
- * @param string _html HTML code to be rendered
+ * @autor Mauricio Giraldo Mutis <mgiraldo@gmail.com>
+ * 
  **/
 class prails extends context {
 
