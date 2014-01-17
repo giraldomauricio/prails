@@ -161,7 +161,7 @@ class prails extends context {
     * @return void
     */
     public function index() {
-        $this->_html = "<div style=\"color:blue\"><strong>Welcome to Prails</strong></div><hr />If you see this message, the application is using the default action and controller.</i>";
+        $this->_html = "<div style=\"color:blue\"><strong>Welcome to Prails</strong></div><hr /><p><strong>Congratulations, you have Prails Up and Running!</strong></p>If you see this message, the application is using the default action and controller.</i>";
         $this->RenderHtml($this->_html);
     }
     
