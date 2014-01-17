@@ -3,6 +3,14 @@ $PRAILS_ENV = "test";
 require_once "../bootstrapper.php";
 require_once "parser.php";
 
+register_shutdown_function( "fatal_handler" );
+
+function fatal_handler()
+{
+  $error = error_get_last();
+  echo 'Error loading test [' . "suite/always_before"."/".$error["file"] . ']: ', $error["message"], "<br/>\n";
+}
+
 $test = new VerySimpleTests();
 $tests->lib = LIBRARY;
 $suites = array("suite/before", "suite/tests", "suite/after");
