@@ -57,7 +57,7 @@ class db_driver implements Prails_iDB {
     }
 
     public function GetDatabaseTables() {
-        $sql = "select * from information_schema.tables";
+        $sql = "select * from information_schema.tables WHERE TABLE_SCHEMA = '".DBNAME."'";
         $this->ExecuteQuery($sql);
     }
 
