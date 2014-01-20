@@ -45,6 +45,8 @@ class DatabaseFirst extends context {
       $class .= "}\n";
       $class .= "?".">";
       
+      $path_to_save = ROOT."app/models/".$table."_model.class.php";
+      file_put_contents($path_to_save, $class);
     }
   }
   
