@@ -50,9 +50,10 @@ class db_driver implements Prails_iDB {
     public function CheckIfTableExists($table_name) {
         $sql = "select COUNT(*) as total from information_schema.tables WHERE table_name = '" . $table_name . "'";
         $this->ExecuteQuery($sql);
-        $count = $this->GetRecordObject()->count;
-        if($count == 0) return true;
-        else return false;
+        $res = $this->GetRecordObject();
+        $count = $res->total;
+        if($count == 0) return false;
+        else return true;
     }
 
     public function GetDatabaseTables() {

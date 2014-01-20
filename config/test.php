@@ -27,4 +27,5 @@ $adminEmail    = "info@prails.com";
 // Default controller and action
 $default_controller = "prails";
 $default_action    = "index";
+$log               = false;
 ?>

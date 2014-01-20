@@ -99,6 +99,13 @@ class prails extends context {
     var $_private = false;
     
     /**
+    * Indicator if the action renders a Prails backend page
+    *
+    * @var boolean
+    */
+    var $_backend = false;
+    
+    /**
     * Name of the layout used as a base to render a view
     *
     * @var string
@@ -200,7 +207,14 @@ class prails extends context {
                 if (file_exists(ROOT . "app/views/public/" . $this->_controller . "/" . $this->_action . ".php")) {
                     $this->_view = $this->_action . ".php";
                 }
-            } else {
+            }
+            else if($this->_backend)
+            {
+              if (file_exists(ROOT . "app/views/_prails/" . $this->_controller . "/" . $this->_action . ".php")) {
+                    $this->_view = $this->_action . ".php";
+                }
+            }
+            else {
                 if (file_exists(ROOT . "app/views/private/" . $this->_controller . "/" . $this->_action . ".php")) {
                     $this->_view = $this->_action . ".php";
                 }
@@ -211,6 +225,8 @@ class prails extends context {
             // TODO: refactor public and private locations to set by user
             if ($this->_private)
                 include ROOT . "app/views/private/" . $this->_controller . "/" . $this->_view . ".php";
+            else if ($this->_backend)
+                include ROOT . "app/views/_prails/" . $this->_controller . "/" . $this->_view . ".php";
             else
                 include include ROOT . "app/views/public/" . $this->_controller . "/" . $this->_view . ".php";
             $this->_html = ob_get_contents();
@@ -221,7 +237,34 @@ class prails extends context {
         print $this->_html;
     }
 
-    
+    /**
+    * Renders the assets inclussion for Javascripts and StyleSheets
+    *
+    * @return string The assets headers
+    */
+   public function RenderAssets()
+   {
+     $this->GetAssets();
+     $headers = "";
+     foreach ($this->_assets as $name => $path) {
+       if(strpos(strtolower($name), ".css"))
+       {
+         $headers .= "<link rel=\"stylesheet\" media=\"screen\" href=\"app/assets/css/".$name."\" />\n";
+       }
+       if(strpos(strtolower($name), ".eot") || strpos(strtolower($name), ".svg") || strpos(strtolower($name), ".ttf") || strpos(strtolower($name), ".woff"))
+       {
+         $headers .= "<link rel=\"stylesheet\" media=\"screen\" href=\"app/assets/fonts/".$name."\" />\n";
+       }
+       if(strpos(strtolower($name), ".js"))
+       {
+         $headers .= "<script src=\"app/assets/js/".$name."\"></script>\n";
+       }
+     }
+     print $headers;
+   }
+
+
+   
     /**
     * Renders the view that corresponds to the action. The name of the view can be provided too.
     * Layouts files are in the form of "_layout_name.php, but is called "layout_name".
@@ -235,6 +278,8 @@ class prails extends context {
     public function RenderView($view_name = "", $layout = true) {
         if ($this->_private)
             $folder = "private";
+        if ($this->_backend)
+            $folder = "_prails";
         else
             $folder = "public";
         // If there is no layout, render the raw view

@@ -27,4 +27,5 @@ $adminEmail    = "vaporwavemiami@aol.com";
 // Default controller and action
 $default_controller = "prails";
 $default_action    = "index";
+$log               = true;
 ?>

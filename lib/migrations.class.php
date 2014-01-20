@@ -12,12 +12,13 @@ class db_migrations extends prails {
     var $_migrations_folder = "";
     
     public function __construct() {
-        $this->_migrations_folder = realpath(dirname(__FILE__)) . "/db/migrations/";
+        $this->_migrations_folder = ROOT . "/db/migrations/";
+        $this->Connect();
     }
 
     public function create_db_migration_table() {
         // Drop the table
-        $this->sql = "DROP TABLE IF EXISTS _prails_database_migrations";
+        $this->sql = "CREATE TABLE IF NOT EXISTS _prails_database_migrations";
         $this->ExecuteQuery($this->sql);
         // Create the table
         $this->sql = "CREATE TABLE _prails_database_migrations (\n";
@@ -34,7 +35,7 @@ class db_migrations extends prails {
 
     private function load_db_migrations() {
         // Check current migrations
-        $this->sql = "SELECT * FROM _prails_database_migrations ORDER BY migration_executed";
+        $this->sql = "SELECT * FROM ".DBNAME."._prails_database_migrations ORDER BY migration_executed";
         $this->Query();
         while ($this->Load()) {
             array_push($this->migration_files, $this->migration_file);
@@ -46,7 +47,7 @@ class db_migrations extends prails {
         // Compare database migrations to the existing ones
         $mydir = dir($this->_migrations_folder);
         while (($migration = $mydir->read())) {
-            if (!in_array($migration, $this->migration_files)) {
+            if (!in_array($migration, $this->migration_files) && $migration != "." && $migration != ".." && $migration != ".DS_Store") {
                 array_push($this->missing_files, $migration);
             }
         }
@@ -55,23 +56,26 @@ class db_migrations extends prails {
 
     private function run_missing_migrations() {
         // Run each new migration
+        $this->Connect();
         foreach ($this->missing_files as $new_migration) {
             logFactory::log("db_migrations", "Running " . $new_migration . " file.");
-            $query = file_get_contents($migrations . $new_migration);
+            $query = file_get_contents($this->_migrations_folder . $new_migration);
             $this->Query($query);
             $this->sql = "INSERT INTO _prails_database_migrations VALUES ('" . str_replace(".sql", "", $new_migration) . "','" . $new_migration . "',now(),1)";
-            $this->Query();
+            $this->Query($this->sql);
         }
     }
 
     public function add_migration_file($sql) {
-        $migration_name = date("migration_Y-m-d-h-m-s.sql");
-        $fp = fopen($this->_migrations_folder.$migration_name, "wb");
+        $migration_name = "migration_".date("Y-m-d-h-i-s").".sql";
+        $fp = fopen($this->_migrations_folder.$migration_name, "x");
         fwrite($fp, $sql);
         fclose($fp);
     }
 
     public function run_migrations() {
+      
+        $this->Connect();
         $this->load_db_migrations();
         $this->check_db_migrations();
         $this->run_missing_migrations();

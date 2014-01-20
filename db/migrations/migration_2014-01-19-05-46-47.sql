@@ -1,0 +1,1 @@
+CREATE TABLE prails_backend (prails_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,username varchar(100),password varchar(100));

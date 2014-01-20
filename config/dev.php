@@ -4,7 +4,7 @@ $uri           = "http://localhost/";
 // Database configuration:
 $db_type       = "mysql";
 $db_server     = "127.0.0.1";
-$db_name       = "gymres";
+$db_name       = "prails";
 $db_user       = "root";
 $db_password   = "root";
 // Optional parameters:
@@ -27,4 +27,5 @@ $adminEmail    = "vaporwavemiami@aol.com";
 // Default controller and action
 $default_controller = "prails";
 $default_action    = "index";
+$log               = true;
 ?>
