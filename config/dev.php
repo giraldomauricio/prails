@@ -2,7 +2,7 @@
 // phpExelerator 4
 $uri           = "http://localhost/";
 // Database configuration:
-$db_type       = "mysql";
+$db_type       = "mysqli";
 $db_server     = "127.0.0.1";
 $db_name       = "prails";
 $db_user       = "root";
