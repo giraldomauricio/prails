@@ -28,4 +28,5 @@ $adminEmail    = "info@prails.com";
 $default_controller = "prails";
 $default_action    = "index";
 $log               = false;
+$migrations_folder = "/Library/WebServer/Documents/prails/db/migrations/";
 ?>

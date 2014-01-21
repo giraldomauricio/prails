@@ -28,4 +28,5 @@ $adminEmail    = "vaporwavemiami@aol.com";
 $default_controller = "prails";
 $default_action    = "index";
 $log               = true;
+$migrations_folder = "/Library/WebServer/Documents/prails/db/migrations/";
 ?>

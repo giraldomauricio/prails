@@ -57,6 +57,7 @@ define("AUTHENTICATION_VARIABLE","logged");
 define("DEFAULT_CONTROLLER",$default_controller);
 define("DEFAULT_ACTION",$default_action);
 define("LOG",$log);
+define("MIGRATIONS_FOLDER",$migrations_folder);
 
 if ($_SERVER['HTTPS'] != "on" && SECURE) {
   $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

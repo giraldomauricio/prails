@@ -8,12 +8,13 @@
 class db_driver implements Prails_iDB {
 
     var $db_resource;
-    var $db_type = "MSSQL";
+    var $db_type = "TEST";
     var $rows_count = 0;
     var $rows_affected = 0;
     var $insert_id = 0;
     var $record = null;
     var $row_pointer = -1;
+    var $db_result;
 
     public function init($recordset) {
         $this->record = $recordset;
@@ -46,24 +47,24 @@ class db_driver implements Prails_iDB {
         $sample = new stdClass();
         if ($this->record == null)
             return false;
-        else
-        {
-            if($this->row_pointer < count($this->record))
-            {
+        else {
+            if ($this->row_pointer < count($this->record)) {
                 $this->row_pointer++;
                 return $this->record[$this->row_pointer];
-            }
-            else return false;
+            } else
+                return false;
         }
     }
-    
-    public function ResetRecord()
-    {
-      $this->row_pointer = -1;
+
+    public function ResetRecord() {
+        $this->row_pointer = -1;
     }
-    
+
     public function CheckIfTableExists($table_name) {
-        return true;
+        if ($this->rows_count == 0)
+            return false;
+        else
+            return true;
     }
 
     public function GetDatabaseTables() {

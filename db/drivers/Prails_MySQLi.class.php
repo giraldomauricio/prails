@@ -14,6 +14,12 @@
 class db_driver implements Prails_iDB {
 
     var $db_resource;
+    var $db_type = "MSSQLI";
+    var $rows_count;
+    var $rows_affected;
+    var $insert_id;
+    var $record;
+    var $row_pointer;
     var $db_result;
 
     public function GetConnectionId($dbserver, $dbuser, $dbpassword, $dbname) {

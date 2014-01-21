@@ -7,18 +7,19 @@
 /**
  * CodeFirst handles the creation and modification of the data model
  * 
- * @autor Mauricio Giraldo Mutis <mgiraldo@gmail.com>
+ * @author Mauricio Giraldo Mutis <mgiraldo@gmail.com>
  * 
  * */
 class CodeFirst extends context {
 
   var $_model;
   var $_fields;
-  var $_dbfields;
+  var $_dbfields = array();
   var $_table;
   var $_key;
   var $_sql;
   var $_migrations;
+  var $_migrations_folder = "";
 
   public function __construct() {
     $this->_migrations = new db_migrations();
@@ -78,7 +79,7 @@ class CodeFirst extends context {
     $sql = "SHOW COLUMNS FROM ".$this->_table." FROM ".DBNAME;
     $this->ExecuteQuery($sql);
     while ($row = $this->GetRecordObject()) {
-      $this->$_dbfields[$row->Field] = $row->Type;
+      $this->_dbfields[$row->Field] = $row->Type;
     }
 
 
@@ -96,7 +97,7 @@ class CodeFirst extends context {
     $this->_sql = "ALTER TABLE " . $this->_table;
     $fields = array();
     foreach ($this->_fields as $column => $type) {
-      array_push($fields, "ADD " . $column . " " . $type);
+      array_push($fields, " ADD " . $column . " " . $type);
     }
     $fields_string = implode(",", $fields);
     $this->_sql .= $fields_string . ");";

@@ -10,6 +10,7 @@ class db_migrations extends prails {
     var $migration_files = array();
     var $missing_files = array();
     var $_migrations_folder = "";
+    var $_migration_file = "";
     
     public function __construct() {
         $this->_migrations_folder = ROOT . "/db/migrations/";
@@ -67,8 +68,8 @@ class db_migrations extends prails {
     }
 
     public function add_migration_file($sql) {
-        $migration_name = "migration_".date("Y-m-d-h-i-s").".sql";
-        $fp = fopen($this->_migrations_folder.$migration_name, "x");
+        $this->_migration_file = "migration_".date("Y-m-d-h-i-s").".sql";
+        $fp = fopen($this->_migrations_folder.$this->_migration_file, "x");
         fwrite($fp, $sql);
         fclose($fp);
     }
