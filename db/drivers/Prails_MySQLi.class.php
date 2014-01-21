@@ -14,17 +14,18 @@
 class db_driver implements Prails_iDB {
 
     var $db_resource;
+    var $db_result;
 
     public function GetConnectionId($dbserver, $dbuser, $dbpassword, $dbname) {
       $this->db_resource = new mysqli($dbserver, $dbuser, $dbpassword, $dbname);  
     }
 
     public function ExecuteQuery($sql) {
-        $this->db_resource->query($sql);
+        $this->db_result = $this->db_resource->query($sql);
     }
 
     public function GetRowsCount() {
-      return $this->db_resource->num_rows;
+      return $this->db_result->num_rows;
     }
 
     public function GetRowsAffected() {
@@ -32,15 +33,15 @@ class db_driver implements Prails_iDB {
     }
 
     public function GetInsertId() {
-        return $this->db_resource->insert_id;
+        return $this->db_result->insert_id;
     }
 
     public function GetRecordObject() {
-        return $this->db_resource->fetch_object;
+        return $this->db_result->fetch_object();
     }
 
     public function ResetRecord() {
-        $this->db_resource->data_seek(0);
+        $this->db_result->data_seek(0);
     }
 
     public function CheckIfTableExists($table_name) {

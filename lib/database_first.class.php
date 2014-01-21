@@ -1,11 +1,16 @@
 <?php
 
-class DatabaseFirst extends context {
+class DatabaseFirst extends prails {
   
   var $_tables;
   var $_table;
   var $_fields = array();
   
+  public function __construct() {
+    $this->Connect();
+  }
+
+
   public function GetAllTables()
   {
     $this->GetDatabaseTables();
@@ -20,9 +25,11 @@ class DatabaseFirst extends context {
       $this->_table = $table;
       $this->_fields = array();
       $sql = "SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='".DBNAME."' AND `TABLE_NAME`='".$table."';";
-      $this->ExecuteQuery($sql);
+      $this->ExecuteQuery($sql); 
       $vars = "";
+      
       while ($row = $this->GetRecordObject()) {
+        
         if($row->COLUMN_KEY == "PRI")
         {
             $this->_key = $row->COLUMN_NAME;
