@@ -21,6 +21,20 @@ class prails_backend extends prails {
       $code_first->Run("backend_model");
     }
   }
+  
+  public function CreateAllModels()
+  {
+    $code_first = new CodeFirst();
+    $code_first->GetDatabaseTables();
+    $df = new DatabaseFirst();
+    while($row = $code_first->GetRecordObject())
+    {
+      array_push($df->_tables, $row->TABLE_NAME);
+      print $row->TABLE_NAME."<br/>";
+    }
+    
+    //$df->CreateModel();
+  }
 
 }
 

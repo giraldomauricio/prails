@@ -12,10 +12,11 @@ class backend extends backend_model{
   {
     $this->_backend = true;
     $be = new prails_backend();
-    $be->CreateBackendTableIfDoesntExist();
-    $df = new DatabaseFirst();
-    $df->_tables[0] = "test_table";
-    $df->CreateModel();
+    $be->CreateAllModels();
+    //$be->CreateBackendTableIfDoesntExist();
+    //$df = new DatabaseFirst();
+    //$df->_tables[0] = "test_table";
+    //$df->CreateModel();
     return $this->RenderHtml("Table created and Model<br/>");
   }
   
