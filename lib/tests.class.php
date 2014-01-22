@@ -18,6 +18,7 @@ class VerySimpleTests {
     var $tests = array();
     var $test;
     var $trail = 90;
+    var $_temp_folder = "";
 
     public function __construct() {
         print "Very Simple PHP Test v " . $this->version . "</br>";
@@ -240,6 +241,19 @@ class VerySimpleTests {
         $this->xml .= "</testsuites>\n";
         file_put_contents($path, $this->xml);
     }
+    
+    public function CreateTempFolder()
+    {
+      $this->_temp_folder = ROOT."temp_test_".date("ymdhis")."/";
+      mkdir($this->_temp_folder, 0777);
+      return $this->_temp_folder;
+    }
+    
+    public function DeleteTempFolder()
+    {
+      Utils::DeleteDirectory($this->_temp_folder);
+    }
+    
 
 }
 

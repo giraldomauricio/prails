@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<testsuites errors="0" failures="0" skipped="0" tests="81" time="0.010543" timestamp="2014-01-17 EST 07:34:20">
-		<testsuite name="Very Simple Test Suite" tests="81" errors="0" failures="0" skipped="0">
+	<testsuites errors="0" failures="0" skipped="0" tests="89" time="0.013465" timestamp="2014-01-21 EST 08:03:05">
+		<testsuite name="Very Simple Test Suite" tests="89" errors="0" failures="0" skipped="0">
 		<properties/>
 			<testcase name="Test" time="0.00">
 		</testcase>
@@ -25,6 +25,22 @@
 			<testcase name="Test table extraction" time="0.00">
 		</testcase>
 			<testcase name="Test id extraction" time="0.00">
+		</testcase>
+			<testcase name="Test to Alter a Table" time="0.00">
+		</testcase>
+			<testcase name="Test Migration" time="0.00">
+		</testcase>
+			<testcase name="Test to Create a Table" time="0.00">
+		</testcase>
+			<testcase name="Test Constructions" time="0.00">
+		</testcase>
+			<testcase name="Test migration table creation" time="0.00">
+		</testcase>
+			<testcase name="Test migration load" time="0.00">
+		</testcase>
+			<testcase name="Test missing migration" time="0.00">
+		</testcase>
+			<testcase name="Test run migration" time="0.00">
 		</testcase>
 			<testcase name="Test Parsing deltas with integers" time="0.00">
 		</testcase>
