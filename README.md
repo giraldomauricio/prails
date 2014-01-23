@@ -116,6 +116,14 @@ You must see:
 
 Hello world
 
+Step 5: COnfigure your Application
+
+Download the Prails project in the location that your site is going to run.
+Open the “config” directory and open the files contained.
+Modify each configuration parameter based on your environments. Out of the box, prails supports a Test, Development, Staging and Production environments. You can have as many as you need (For example a Controlled Production Environment).  To help Prails understand which configuration to load, you must open the “hosts.php” file. Here you can point different hosts to different configurations.
+Besides DEV, STG and PROD, the TEST environment trends to run different from the others. In this one there is no Database connection and most of the data is handled using fixtures (Database simulation via predefined data files). This environment also injects different specifications to your application in order to run the Prails tests. We recommend using this Test Environment to run your Unit Tests. Integration tests can use the other configurations because it may require a real database connection.
+
+
 TODO LIST:
 
 a) Self creating command: create the structure of the application with a PHP command.

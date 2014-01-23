@@ -27,7 +27,7 @@ class Routes {
     if($request[1]) $this->action = $request[1];
     else $this->action = $this->_default_action;
     if(!$this->controller && !$this->action) rescue::NoDefaultActionAndController ();
-    if($request[2]) $this->query_string = $this->GetQueryString($request[2]);
+    if(isset($request[2])) $this->query_string = $this->GetQueryString($request[2]);
   }
 
   public function GetQueryString($query_string) {
@@ -35,7 +35,7 @@ class Routes {
     $query_string_array = explode("&", $query_string);
     foreach ($query_string_array as $key_value_pair) {
       $key_value_pair_array = explode("=", $key_value_pair);
-      $this->$key_value_pair_array[0] = $key_value_pair_array[1];
+      if($key_value_pair_array[0]) $this->$key_value_pair_array[0] = $key_value_pair_array[1];
     }
     if(count($query_string_array)==1) $this->id = $query_string_array[0];
   }

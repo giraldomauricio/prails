@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<testsuites errors="0" failures="0" skipped="0" tests="89" time="0.013465" timestamp="2014-01-21 EST 08:03:05">
+	<testsuites errors="0" failures="0" skipped="0" tests="89" time="0.011732" timestamp="2014-01-22 EST 07:35:37">
 		<testsuite name="Very Simple Test Suite" tests="89" errors="0" failures="0" skipped="0">
 		<properties/>
 			<testcase name="Test" time="0.00">

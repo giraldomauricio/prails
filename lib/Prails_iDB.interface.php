@@ -19,6 +19,7 @@ interface Prails_iDB {
   public function ResetRecord();
   public function GetDatabaseTables();
   public function CheckIfTableExists($table_name);
+  public function PageQuery($page);
 }
 
 ?>

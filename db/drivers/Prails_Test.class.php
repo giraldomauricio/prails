@@ -70,6 +70,11 @@ class db_driver implements Prails_iDB {
     public function GetDatabaseTables() {
         return true;
     }
+    
+    public function PageQuery($sql)
+    {
+      return true;
+    }
 
 }
 

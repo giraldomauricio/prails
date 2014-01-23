@@ -61,6 +61,10 @@ class db_driver implements Prails_iDB {
         $sql = "select * from information_schema.tables";
         $this->ExecuteQuery($sql);
     }
+    
+    public function PageQuery($page) {
+      return true;
+    }
 
 }
 

@@ -41,6 +41,12 @@ class rescue {
   {
     print "<div style=\"color:red\"><strong>Prails Query Builder Error</strong></div><hr />There is no table defined</i>].";
   }
+  
+  public static function ViewRequiresAuthentication()
+  {
+    print "<div style=\"color:red\"><strong>Prails Private View</strong></div><hr />View requires authentication</i>.";
+  }
+  
 }
 
 ?>

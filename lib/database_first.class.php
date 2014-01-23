@@ -2,7 +2,7 @@
 
 class DatabaseFirst extends prails {
   
-  var $_tables;
+  var $_tables = array();
   var $_table;
   var $_fields = array();
   
@@ -19,9 +19,11 @@ class DatabaseFirst extends prails {
     }
   }
   
-  public function CreateModel()
+  public function CreateModels()
   {
+    print  "<strong>&raquo;Starting Model creation.</strong><br/>";
     foreach ($this->_tables as $table) {
+      print "<i>&raquo;Creating Model for ".$table."</i><br/>";
       $this->_table = $table;
       $this->_fields = array();
       $sql = "SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='".DBNAME."' AND `TABLE_NAME`='".$table."';";

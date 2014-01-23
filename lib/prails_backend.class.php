@@ -24,16 +24,16 @@ class prails_backend extends prails {
   
   public function CreateAllModels()
   {
+    print "<strong>&raquo;Pulling Database information.</strong><br/>";
     $code_first = new CodeFirst();
     $code_first->GetDatabaseTables();
     $df = new DatabaseFirst();
     while($row = $code_first->GetRecordObject())
     {
       array_push($df->_tables, $row->TABLE_NAME);
-      print $row->TABLE_NAME."<br/>";
+      print "<i>&raquo;Found table ".$row->TABLE_NAME.".</i><br/>";
     }
-    
-    //$df->CreateModel();
+    $df->CreateModels();
   }
 
 }
