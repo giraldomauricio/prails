@@ -364,7 +364,7 @@ class prails extends context {
   public function DynamicCall() {
 
     $this->htmlControl = new PrailsHtmlControls();
-    
+    $this->htmlControl->object = $this;
     
     $this->Connect();
 
@@ -494,8 +494,8 @@ class prails extends context {
    */
   public function GetDataSet() {
     $result = array();
-    for ($i = 0; $i < $this->GetRowsCount(); $i++) {
-      array_push($result, $this->GetRecordObject());
+    while($row = $this->GetRecordObject()){
+      array_push($result, $row);
     }
     return $result;
   }
