@@ -17,6 +17,7 @@ class db_driver implements Prails_iDB {
     var $db_result;
 
     public function init($recordset) {
+        $this->row_pointer = -1;
         $this->record = $recordset;
     }
 
@@ -44,7 +45,6 @@ class db_driver implements Prails_iDB {
     }
 
     public function GetRecordObject() {
-        $sample = new stdClass();
         if ($this->record == null)
             return false;
         else {

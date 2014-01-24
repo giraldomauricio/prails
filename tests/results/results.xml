@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<testsuites errors="0" failures="0" skipped="0" tests="91" time="0.015203" timestamp="2014-01-23 EST 06:46:23">
+		<testsuite name="Very Simple Test Suite" tests="91" errors="0" failures="0" skipped="0">
+		<properties/>
+			<testcase name="Test" time="0.00">
+		</testcase>
+			<testcase name="Test environment is set by default" time="0.00">
+		</testcase>
+			<testcase name="Test architectures" time="0.00">
+		</testcase>
+			<testcase name="Test ENV" time="0.00">
+		</testcase>
+			<testcase name="Test Succesful Invocations" time="0.00">
+		</testcase>
+			<testcase name="Test Succesful Instance" time="0.00">
+		</testcase>
+			<testcase name="Test Failed Invocations" time="0.00">
+		</testcase>
+			<testcase name="Test Field extraction" time="0.00">
+		</testcase>
+			<testcase name="Test Field extraction key" time="0.00">
+		</testcase>
+			<testcase name="Test Field interference extraction base field" time="0.00">
+		</testcase>
+			<testcase name="Test table extraction" time="0.00">
+		</testcase>
+			<testcase name="Test id extraction" time="0.00">
+		</testcase>
+			<testcase name="Test to Alter a Table" time="0.00">
+		</testcase>
+			<testcase name="Test Migration" time="0.00">
+		</testcase>
+			<testcase name="Test to Create a Table" time="0.00">
+		</testcase>
+			<testcase name="Test Constructions" time="0.00">
+		</testcase>
+			<testcase name="Test migration table creation" time="0.00">
+		</testcase>
+			<testcase name="Test migration load" time="0.00">
+		</testcase>
+			<testcase name="Test missing migration" time="0.00">
+		</testcase>
+			<testcase name="Test run migration" time="0.00">
+		</testcase>
+			<testcase name="Test Parsing deltas with integers" time="0.00">
+		</testcase>
+			<testcase name="Test Parsing deltas with strings" time="0.00">
+		</testcase>
+			<testcase name="Test Parsing deltas with null" time="0.00">
+		</testcase>
+			<testcase name="Test Parsing deltas with null" time="0.00">
+		</testcase>
+			<testcase name="Test Driver" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Queries: GetAll" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Queries: GetOne" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Injection: Row Count" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Injection: Rows Affected" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Injection: Insert ID" time="0.00">
+		</testcase>
+			<testcase name="Test token validation" time="0.00">
+		</testcase>
+			<testcase name="Test enclosing a number" time="0.00">
+		</testcase>
+			<testcase name="Test enclosing a string" time="0.00">
+		</testcase>
+			<testcase name="Test enclosing with slashes" time="0.00">
+		</testcase>
+			<testcase name="Test Model Validity False" time="0.00">
+		</testcase>
+			<testcase name="Test Model Validity Error Message" time="0.00">
+		</testcase>
+			<testcase name="Test Model Validity True" time="0.00">
+		</testcase>
+			<testcase name="Test value assignation" time="0.00">
+		</testcase>
+			<testcase name="Test class assignation" time="0.00">
+		</testcase>
+			<testcase name="Test query builder" time="0.00">
+		</testcase>
+			<testcase name="Test query builder more tables and fields" time="0.00">
+		</testcase>
+			<testcase name="Test query builder with foreign keys" time="0.00">
+		</testcase>
+			<testcase name="Test query builder with foreign keys" time="0.00">
+		</testcase>
+			<testcase name="Test query builder parser with object" time="0.00">
+		</testcase>
+			<testcase name="Test query builder parser with literal" time="0.00">
+		</testcase>
+			<testcase name="Test query builder using 2 model relationships" time="0.00">
+		</testcase>
+			<testcase name="Test query builder using 3 model relationships" time="0.00">
+		</testcase>
+			<testcase name="Test query builder using 3 model relationships and one field" time="0.00">
+		</testcase>
+			<testcase name="Test query builder using 3 model relationships and one field and extra condition" time="0.00">
+		</testcase>
+			<testcase name="Test query builder insert literal" time="0.00">
+		</testcase>
+			<testcase name="Test query builder smart insert" time="0.00">
+		</testcase>
+			<testcase name="Test query builder smart update" time="0.00">
+		</testcase>
+			<testcase name="Test fixture record after load" time="0.00">
+		</testcase>
+			<testcase name="Test Query" time="0.00">
+		</testcase>
+			<testcase name="Test fixture size" time="0.00">
+		</testcase>
+			<testcase name="Test fixture size using count" time="0.00">
+		</testcase>
+			<testcase name="Test fixture load one time" time="0.00">
+		</testcase>
+			<testcase name="Test fixture record" time="0.00">
+		</testcase>
+			<testcase name="Test fixture load second time" time="0.00">
+		</testcase>
+			<testcase name="Test fixture record" time="0.00">
+		</testcase>
+			<testcase name="Test fixture load third time" time="0.00">
+		</testcase>
+			<testcase name="Test fixture record" time="0.00">
+		</testcase>
+			<testcase name="Test fixture load empty recordset" time="0.00">
+		</testcase>
+			<testcase name="Test delete query" time="0.00">
+		</testcase>
+			<testcase name="Test insert query" time="0.00">
+		</testcase>
+			<testcase name="Test update query" time="0.00">
+		</testcase>
+			<testcase name="Test search query with one field" time="0.00">
+		</testcase>
+			<testcase name="Test search query with multiple fields" time="0.00">
+		</testcase>
+			<testcase name="Test search query with multiple fields and one selector" time="0.00">
+		</testcase>
+			<testcase name="Test search query Get One" time="0.00">
+		</testcase>
+			<testcase name="Test search query Get One Alias: Find By Id" time="0.00">
+		</testcase>
+			<testcase name="Test full dataset retrieval." time="0.00">
+		</testcase>
+			<testcase name="Test empty controller route" time="0.00">
+		</testcase>
+			<testcase name="Test empty action route" time="0.00">
+		</testcase>
+			<testcase name="Test basic controller route" time="0.00">
+		</testcase>
+			<testcase name="Test basic action route" time="0.00">
+		</testcase>
+			<testcase name="Test basic action execution" time="0.00">
+		</testcase>
+			<testcase name="Test no controller and action" time="0.00">
+		</testcase>
+			<testcase name="Test basic controller route with QS" time="0.00">
+		</testcase>
+			<testcase name="Test basic action route with QS" time="0.00">
+		</testcase>
+			<testcase name="Test QS var a" time="0.00">
+		</testcase>
+			<testcase name="Test QS var c" time="0.00">
+		</testcase>
+			<testcase name="Test QS empty var e" time="0.00">
+		</testcase>
+			<testcase name="Test QS empty var f" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsApp var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsController var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsModel var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsViews var" time="0.00">
+		</testcase>
+			<testcase name="Test PrailsRoot var" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Core MVC via Index" time="0.00">
+		</testcase>
+			<testcase name="Test Prails Core MVC via Class" time="0.00">
+		</testcase>
+	</testsuite>
+</testsuites>

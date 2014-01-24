@@ -45,7 +45,7 @@ class DatabaseFirst extends prails {
       
       $class =  "";
       $class .= "<"."?\n";
-      $class .= "class ".$table."_model extends prails {\n";
+      $class .= "class ".$table." extends prails {\n";
       $class .=  "\n";
       $class .= $vars;
       $class .=  "\n";
