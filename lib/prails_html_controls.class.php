@@ -66,6 +66,7 @@ class PrailsHtmlControls {
    *
    * @return string the Rendered DropDown
    */
+  
   public function DropDown($field, $dataSet, $delta, $label = "", $class = "") {
     $deltaFields = explode(":", $delta);
     $value = $this->object->$field;
@@ -74,13 +75,27 @@ class PrailsHtmlControls {
     $selected = "";
     $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
     $res .= "<select name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" >";
-    foreach ($dataSet as $row) {
-      $validator++;
-      if ($row->$deltaFields[0] == $value)
-        $selected = " selected";
-      else
-        $selected = "";
-      $res .= "<option value=\"" . $row->$deltaFields[0] . "\"" . $selected . ">" . $row->$deltaFields[1] . "</option>\n";
+    if(is_object($dataSet[0]))
+    {
+      foreach ($dataSet as $row) {
+        $validator++;
+        if ($row->$deltaFields[0] == $value)
+          $selected = " selected";
+        else
+          $selected = "";
+        $res .= "<option value=\"" . $row->$deltaFields[0] . "\"" . $selected . ">" . $row->$deltaFields[1] . "</option>\n";
+      }
+    }
+    else
+    {
+      foreach ($dataSet as $key => $value) {
+        $validator++;
+        if ($row->$deltaFields[0] == $value)
+          $selected = " selected";
+        else
+          $selected = "";
+        $res .= "<option value=\"" . $key . "\"" . $selected . ">" . $value . "</option>\n";
+      }
     }
     $res .= "</select>\n";
     if ($validator == 0)
