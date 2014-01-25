@@ -30,4 +30,5 @@ $default_action    = "index";
 $log               = false;
 $migrations_folder = "/Library/WebServer/Documents/prails/db/migrations/";
 $auth_var      = "logged";
+$tests_folder = "/Library/WebServer/Documents/prails/tests/";
 ?>

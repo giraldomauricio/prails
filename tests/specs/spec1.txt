@@ -1,0 +1,3 @@
+Scenario A Valid Spec
+  Given the variable 'test'
+  it do have the value of 'testing'

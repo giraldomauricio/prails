@@ -19,10 +19,32 @@ class PrailsSpecs {
   var $var_name;
   var $var_value;
   var $message;
+  var $spec = array();
+  var $spec_file;
   
-  public function spec() {
+  public function Load($file)
+  {
+    $this->spec_file = TESTS_FOLDER.$file;
+    if(file_exists($this->spec_file))
+    {
+      $this->spec = file($this->spec_file);
+    }
+  }
+
+
+  public function Spec() {
     for ($i = 0; $i < func_num_args(); $i++) {
       $argv = func_get_arg($i);
+      $this->Given($argv);
+      $this->ItHas($argv);
+    }
+    return $this;
+  }
+  
+  public function SpecFromFile($file = "") {
+    if($file != "") $this->Load ($file);
+    foreach ($this->spec as $argv) {
+      $argv = trim($argv);
       $this->Given($argv);
       $this->ItHas($argv);
     }
@@ -36,7 +58,6 @@ class PrailsSpecs {
   
   public function Given($phrase)
   {
-    
     preg_match('/Given the (variable|array) \'(.*?)\'/', $phrase, $match );
     if(count($match)>2) $this->var_name = $match[2]; 
   }
