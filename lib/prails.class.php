@@ -371,7 +371,7 @@ class prails extends context {
     $call = $_REQUEST["doCall"];
 
     foreach ($_REQUEST as $key => $value) {
-      $this->$key = $value;
+      $this->$key = stripslashes($value);
     }
 
     if (method_exists($this, $call)) {
