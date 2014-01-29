@@ -174,6 +174,12 @@ class prails extends context {
    * @var String
    */
   var $htmlControl;
+  /**
+   * Variable to hold the page where you redirect users when need to login
+   *
+   * @var String
+   */
+  var $private_login_page = "login";
 
   /**
    * Index is the default main action when no Controller is declared.
@@ -209,8 +215,8 @@ class prails extends context {
   public function Render() {
     $auth_var = AUTHENTICATION_VARIABLE;
     if ($this->_private && !$_SESSION[$auth_var]) {
-      if (file_exists(ROOT . "app/views/private/_login.php")) {
-        $this->_view = "/../_login";
+      if (file_exists(ROOT . "app/views/private/".$this->private_login_page.".php")) {
+        $this->_view = ROOT . "app/views/private/".$this->private_login_page.".php";
       } else {
         rescue::ViewRequiresAuthentication($this->_action, $this->_controller);
         exit;
@@ -235,11 +241,19 @@ class prails extends context {
       ob_start();
       // TODO: refactor public and private locations to set by user
       if ($this->_private)
-        include ROOT . "app/views/private/" . $this->_controller . "/" . $this->_view . ".php";
+      {
+        $view_to_include = ROOT . "app/views/private/" . $this->_controller . "/" . $this->_view . ".php";
+      }
       else if ($this->_backend)
-        include ROOT . "app/views/_prails/" . $this->_controller . "/" . $this->_view . ".php";
+      {
+        $view_to_include = ROOT . "app/views/_prails/" . $this->_controller . "/" . $this->_view . ".php";
+      }
       else
-        include include ROOT . "app/views/public/" . $this->_controller . "/" . $this->_view . ".php";
+      {
+        $view_to_include = ROOT . "app/views/public/" . $this->_controller . "/" . $this->_view . ".php";
+      }
+      if(file_exists($view_to_include)) include $view_to_include;
+      
       $this->_html = ob_get_contents();
       ob_end_clean();
     }
@@ -368,7 +382,7 @@ class prails extends context {
     
     $this->Connect();
 
-    $call = $_REQUEST["doCall"];
+    //$call = $_REQUEST["doCall"];
 
     foreach ($_REQUEST as $key => $value) {
       $this->$key = stripslashes($value);

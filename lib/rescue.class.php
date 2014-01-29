@@ -29,7 +29,7 @@ class rescue {
   
   public static function NoDefaultDatabaseDriver()
   {
-    print "<div style=\"color:red\"><strong>Prails Database Error</strong></div><hr />The application doesn't have a database driver available</i>].";
+    print "<div style=\"color:red\"><strong>Prails Database Error</strong></div><hr />The application doesn't have a database driver available</i>.";
   }
   
   public static function ErrorReadingFixture()
