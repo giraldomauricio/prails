@@ -160,20 +160,21 @@ class prails extends context {
    * @var ObjectArray
    */
   var $_errors = array();
-  
+
   /**
    * Variable to hold the sql queries
    *
    * @var String
    */
   var $sql = "";
-  
+
   /**
    * Variable to hold the sql queries
    *
    * @var String
    */
   var $htmlControl;
+
   /**
    * Variable to hold the page where you redirect users when need to login
    *
@@ -215,8 +216,8 @@ class prails extends context {
   public function Render() {
     $auth_var = AUTHENTICATION_VARIABLE;
     if ($this->_private && !$_SESSION[$auth_var]) {
-      if (file_exists(ROOT . "app/views/private/".$this->private_login_page.".php")) {
-        $this->_view = ROOT . "app/views/private/".$this->private_login_page.".php";
+      if (file_exists(ROOT . "app/views/private/" . $this->private_login_page . ".php")) {
+        $this->_view = ROOT . "app/views/private/" . $this->private_login_page . ".php";
       } else {
         rescue::ViewRequiresAuthentication($this->_action, $this->_controller);
         exit;
@@ -240,20 +241,16 @@ class prails extends context {
     if ($this->_view) {
       ob_start();
       // TODO: refactor public and private locations to set by user
-      if ($this->_private)
-      {
+      if ($this->_private) {
         $view_to_include = ROOT . "app/views/private/" . $this->_controller . "/" . $this->_view . ".php";
-      }
-      else if ($this->_backend)
-      {
+      } else if ($this->_backend) {
         $view_to_include = ROOT . "app/views/_prails/" . $this->_controller . "/" . $this->_view . ".php";
-      }
-      else
-      {
+      } else {
         $view_to_include = ROOT . "app/views/public/" . $this->_controller . "/" . $this->_view . ".php";
       }
-      if(file_exists($view_to_include)) include $view_to_include;
-      
+      if (file_exists($view_to_include))
+        include $view_to_include;
+
       $this->_html = ob_get_contents();
       ob_end_clean();
     }
@@ -271,7 +268,7 @@ class prails extends context {
     $this->GetAssets();
     $headers = "";
     foreach ($this->_assets as $name => $path) {
-      $public_path = str_replace(ROOT."app/", "app/", $path);
+      $public_path = str_replace(ROOT . "app/", "app/", $path);
       if (strpos(strtolower($public_path), ".css")) {
         $headers .= "<link rel=\"stylesheet\" media=\"screen\" href=\"" . $public_path . "\" />\n";
       }
@@ -379,7 +376,7 @@ class prails extends context {
 
     $this->htmlControl = new PrailsHtmlControls();
     $this->htmlControl->object = $this;
-    
+
     $this->Connect();
 
     //$call = $_REQUEST["doCall"];
@@ -508,7 +505,7 @@ class prails extends context {
    */
   public function GetDataSet() {
     $result = array();
-    while($row = $this->GetRecordObject()){
+    while ($row = $this->GetRecordObject()) {
       array_push($result, $row);
     }
     return $result;
@@ -622,9 +619,21 @@ class prails extends context {
     // Check constraints
     $constraints = Utils::ParseDelta($this->_constraints);
     foreach ($constraints as $field => $contraint) {
-      if (gettype($_REQUEST[$field]) != $contraint) {
-        $this->Error("Model Validation Error: Constraint", $field . " has to be " . $contraint . ". Given value is [" . $_REQUEST[$field] . "], wich is " . gettype($_REQUEST[$field]));
-        $result = FALSE;
+      $field = trim($field);
+      $contraint = trim($contraint);
+      if ($contraint != "required") {
+        if (gettype($_REQUEST[$field]) != $contraint) {
+          $this->Error("Model Validation Error: Constraint", $field . " has to be " . $contraint . ". Given value is [" . $_REQUEST[$field] . "], wich is " . gettype($_REQUEST[$field]));
+          $result = FALSE;
+        }
+      }
+      else
+      {
+        if($_REQUEST[$field] == "" && $contraint == "required")
+        {
+          $this->Error("Model Validation Error: Constraint", $field . " cannot be empty.".$_REQUEST[$field] );
+          $result = FALSE;
+        }
       }
     }
     return $result;
@@ -651,19 +660,19 @@ class prails extends context {
    */
   public function Tokenize() {
     $token = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                    // 32 bits for "time_low"
-                    mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-                    // 16 bits for "time_mid"
-                    mt_rand(0, 0xffff),
-                    // 16 bits for "time_hi_and_version",
-                    // four most significant bits holds version number 4
-                    mt_rand(0, 0x0fff) | 0x4000,
-                    // 16 bits, 8 bits for "clk_seq_hi_res",
-                    // 8 bits for "clk_seq_low",
-                    // two most significant bits holds zero and one for variant DCE1.1
-                    mt_rand(0, 0x3fff) | 0x8000,
-                    // 48 bits for "node"
-                    mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+            // 32 bits for "time_low"
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            // 16 bits for "time_mid"
+            mt_rand(0, 0xffff),
+            // 16 bits for "time_hi_and_version",
+            // four most significant bits holds version number 4
+            mt_rand(0, 0x0fff) | 0x4000,
+            // 16 bits, 8 bits for "clk_seq_hi_res",
+            // 8 bits for "clk_seq_low",
+            // two most significant bits holds zero and one for variant DCE1.1
+            mt_rand(0, 0x3fff) | 0x8000,
+            // 48 bits for "node"
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
     );
     $_SESSION["prails_token"] = $token;
     return $token;
@@ -731,6 +740,30 @@ class prails extends context {
     $error->detail = $detail;
     array_push($this->_errors, $error);
     logFactory::error(__CLASS__, $message);
+  }
+  
+  /**
+   * Displays Errors
+   * 
+   * @return string The Errors in HTML Format
+   */
+  public function DisplayErrors($message, $detail = "") {
+    $logger = new logFactory();
+    $error = new PrailsErrors();
+    $error->class = __CLASS__;
+    $error->file = __FILE__;
+    $error->line = __LINE__;
+    $error->method = __METHOD__;
+    $error->message = $message;
+    $error->detail = $detail;
+    array_push($this->_errors, $error);
+    logFactory::error(__CLASS__, $message);
+    
+    foreach ($this->_errors as $error) {
+      if($error->message != "") $errors .= "&raquo;".$error->message.":".$error->detail."<br/>";
+    }
+    
+    return $errors;
   }
 
 }

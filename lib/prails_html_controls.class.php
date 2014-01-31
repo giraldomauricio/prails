@@ -37,6 +37,23 @@ class PrailsHtmlControls {
     $res .="<input type=\"text\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" value=\"" . $value . "\" prails_validation=\"\" prails_validation_message=\"\"/>\n";
     return $res;
   }
+  
+  /**
+   * Renders a Password Field using the Data Model
+   *
+   * @return string the Rendered TextField
+   */
+  public function PasswordField($field, $label = "", $class = "") {
+    if ($label == "")
+      $label = $field;
+    if ($class == "")
+      $class = $this->class;
+    $value = $this->object->$field;
+    $res = "";
+    $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
+    $res .="<input type=\"password\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" value=\"" . $value . "\" prails_validation=\"\" prails_validation_message=\"\"/>\n";
+    return $res;
+  }
 
   /**
    * Renders a Text Field using the Data Model
@@ -79,6 +96,9 @@ class PrailsHtmlControls {
     {
       foreach ($dataSet as $row) {
         $validator++;
+        
+        print $row->$deltaFields[0]."=".$value;
+        
         if ($row->$deltaFields[0] == $value)
           $selected = " selected";
         else
@@ -88,13 +108,13 @@ class PrailsHtmlControls {
     }
     else
     {
-      foreach ($dataSet as $key => $value) {
+      foreach ($dataSet as $key => $dsvalue) {
         $validator++;
-        if ($row->$deltaFields[0] == $value)
+        if ($key == $value)
           $selected = " selected";
         else
           $selected = "";
-        $res .= "<option value=\"" . $key . "\"" . $selected . ">" . $value . "</option>\n";
+        $res .= "<option value=\"" . $key . "\"" . $selected . ">" . $dsvalue . "</option>\n";
       }
     }
     $res .= "</select>\n";
