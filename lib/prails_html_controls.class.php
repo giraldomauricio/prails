@@ -39,6 +39,18 @@ class PrailsHtmlControls {
   }
   
   /**
+   * Renders a Hidden Field using the Data Model
+   *
+   * @return string the Rendered HiddenField
+   */
+  public function HiddenField($field) {
+    $value = $this->object->$field;
+    $res = "";
+    $res .="<input type=\"hidden\" name=\"" . $field . "\" id=\"" . $field . "\" value=\"" . $value . "\"/>\n";
+    return $res;
+  }
+  
+  /**
    * Renders a Password Field using the Data Model
    *
    * @return string the Rendered TextField
