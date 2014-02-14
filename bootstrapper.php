@@ -2,7 +2,7 @@
 
 // ###################################################################
 // Prails
-// (R) 2013
+// (R) 2013-2014
 // ###################################################################
 // Start application configuration
 
@@ -33,36 +33,16 @@ try
   rescue::NoConfigurationAvailable();
 }
 
-define("DBTYPE", $db_type);
-define("DBSERVER", $db_server);
-define("SECURE", $secure);
-define("DBNAME", $db_name);
-define("DBUSER", $db_user);
-define("DBPASSWORD", $db_password);
-define("LIBRARY", $app_root);
-// TODO: Refactor following constant
-//define("LIBRARY", $app_root."lib");
-define("LOGTYPE", $log_type);
-define("LOGFOLDER", $log_folder);
-define("DEBUG", $debug);
-define("VERBOSE", $verbose);
-define("VISUALERRORS", $visual_errors);
-define("ROOT", $app_root);
-define("FROMEMAIL", $from_email);
-define("TEMPLATES", $templates);
-define("URI", $uri);
-define("ADMINEMAIL", $adminEmail);
-define("LASTQUERY", "");
-define("AUTHENTICATION_VARIABLE","logged");
-define("DEFAULT_CONTROLLER",$default_controller);
-define("DEFAULT_ACTION",$default_action);
-define("LOG",$log);
-define("MIGRATIONS_FOLDER",$migrations_folder);
-define("TESTS_FOLDER",$tests_folder);
+foreach ($_config_vars as $_config_var => $_config_val) {
+  define($_config_var, $_config_val);
+}
 
-if ($_SERVER['HTTPS'] != "on" && SECURE) {
-  $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-  header("Location: $redirect");
+if(isset($_SERVER['HTTPS']))
+{
+  if ($_SERVER['HTTPS'] != "on" && SECURE) {
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    header("Location: $redirect");
+  }
 }
 
 // ###################################################################

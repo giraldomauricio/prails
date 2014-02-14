@@ -8,7 +8,8 @@ register_shutdown_function( "fatal_handler" );
 function fatal_handler()
 {
   $error = error_get_last();
-  echo 'Error loading test [' . "suite/always_before"."/".$error["file"] . ']: ', $error["message"], "<br/>\n";
+  echo 'Error loading test [' . $error["file"] . ']: ', $error["message"], "<br/>\n";
+  print_r($error);
 }
 
 $test = new VerySimpleTests();
@@ -72,8 +73,8 @@ foreach ($suites as $suite) {
   
 }
 $test->Results();
-$parser = new JunitParser();
-$report = new report_ob();
-$results = $parser->parse($report, "results/results.xml");
+//$parser = new JunitParser();
+//$report = new report_ob();
+//$results = $parser->parse($report, "results/results.xml");
 //print_r($results);
 ?>

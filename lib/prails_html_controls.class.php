@@ -32,9 +32,35 @@ class PrailsHtmlControls {
     if ($class == "")
       $class = $this->class;
     $value = $this->object->$field;
+    $field_error = "";
+    if (count($this->object->_errors) > 0) {
+      
+      foreach ($this->object->_errors as $error) {
+        
+        if ($error->field == $field)
+        {
+          
+          $field_error = $error->detail;
+        }
+          
+      }
+    }
+    if($field_error != "") $field_error = "<div>".$field_error."</div>";
     $res = "";
     $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
-    $res .="<input type=\"text\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" value=\"" . $value . "\" prails_validation=\"\" prails_validation_message=\"\"/>\n";
+    $res .="<input type=\"text\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" value=\"" . $value . "\" prails_validation=\"\" prails_validation_message=\"\"/>".$field_error."\n";
+    return $res;
+  }
+
+  /**
+   * Renders a Hidden Field using the Data Model
+   *
+   * @return string the Rendered HiddenField
+   */
+  public function HiddenField($field) {
+    $value = $this->object->$field;
+    $res = "";
+    $res .="<input type=\"hidden\" name=\"" . $field . "\" id=\"" . $field . "\" value=\"" . $value . "\"/>\n";
     return $res;
   }
   
@@ -95,7 +121,6 @@ class PrailsHtmlControls {
    *
    * @return string the Rendered DropDown
    */
-  
   public function DropDown($field, $dataSet, $delta, $label = "", $class = "") {
     $deltaFields = explode(":", $delta);
     $value = $this->object->$field;
@@ -104,13 +129,12 @@ class PrailsHtmlControls {
     $selected = "";
     $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
     $res .= "<select name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" >";
-    if(is_object($dataSet[0]))
-    {
+    if (is_object($dataSet[0])) {
       foreach ($dataSet as $row) {
         $validator++;
-        
-        print $row->$deltaFields[0]."=".$value;
-        
+
+        print $row->$deltaFields[0] . "=" . $value;
+
         if ($row->$deltaFields[0] == $value)
           $selected = " selected";
         else
@@ -118,8 +142,7 @@ class PrailsHtmlControls {
         $res .= "<option value=\"" . $row->$deltaFields[0] . "\"" . $selected . ">" . $row->$deltaFields[1] . "</option>\n";
       }
     }
-    else
-    {
+    else {
       foreach ($dataSet as $key => $dsvalue) {
         $validator++;
         if ($key == $value)
@@ -140,9 +163,10 @@ class PrailsHtmlControls {
     $value = $this->object->$field;
     $res = "";
     $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
-    $res .="<textarea class=\"" . $class . "\" cols=\"".$cols."\" name=\"" . $field . "\" id=\"" . $field ." rows=\"".$rows."\">".$value."</textarea>";
+    $res .="<textarea class=\"" . $class . "\" cols=\"" . $cols . "\" name=\"" . $field . "\" id=\"" . $field . " rows=\"" . $rows . "\">" . stripslashes($value) . "</textarea>";
     return $res;
   }
 
 }
+
 ?>
