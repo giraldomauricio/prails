@@ -59,7 +59,7 @@ if(file_exists($db_driver_location))
 }
 else{
   rescue::NoDefaultDatabaseDriver();
-  break;
+  exit;
 }
 
 // Load base classes
