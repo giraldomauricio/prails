@@ -1,4 +1,5 @@
 <?php
+$prails = new prails();
 $test->GroupTests("Prails Fixtures and Recordsets");
 $recordset = $prails->LoadFixture("test");
 $prails->QueryAndLoad();
