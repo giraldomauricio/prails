@@ -8,5 +8,4 @@ class PrailsErrors {
     var $detail;
     var $innerError;
     var $method;
-    var $field;
 }

@@ -433,7 +433,7 @@ class Utils {
     if (is_numeric($data))
       return $data;
     else {
-      return "'" . addslashes(htmlentities($data)) . "'";
+      return "'" . addslashes($data) . "'";
     }
   }
   

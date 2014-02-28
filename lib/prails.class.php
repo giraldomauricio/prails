@@ -124,7 +124,7 @@ class prails extends context {
      *
      * @var array
      */
-    var $_assets_priority = array();
+    var $_assets_priority = array("_jquery.js","_jquery_tools.min.js","jquery.jqplot.min.js");
 
     /**
      * Database name
