@@ -32,6 +32,17 @@ try
 {
   rescue::NoConfigurationAvailable();
 }
+// Define where Prails is running. Can be overrided by the configuration variable if desired.
+define("ROOT",__DIR__."/");
+define("MIGRATIONS_FOLDER",__DIR__."/db/migrations/");
+define("LOGFOLDER",__DIR__."/logs/");
+define("TESTS_FOLDER",__DIR__."/tests/");
+define("LIBRARY",__DIR__."/");
+define("DEFAULT_CONTROLLER","prails");
+define("DEFAULT_ACTION","index");
+define("AUTHENTICATION_VARIABLE","logged");
+define("LASTQUERY","");
+
 
 foreach ($_config_vars as $_config_var => $_config_val) {
   define($_config_var, $_config_val);

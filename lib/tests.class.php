@@ -13,7 +13,7 @@ class VerySimpleTests {
     var $lineCount = 0;
     var $ignoredTests = 0;
     var $ignore = false;
-    var $version = "1.8.2";
+    var $version = "1.8.4";
     var $xml = "";
     var $tests = array();
     var $test;
@@ -220,7 +220,9 @@ class VerySimpleTests {
         print "Time taken:" . (round(microtime(true) - $_SESSION['start_time'], 6)) . "<br/>\n";
         print "</div>\n";
         //print "Writing results.<br/>";
-        $this->output_junit("results/results.xml");
+        chmod(TESTS_FOLDER."results", 0777);
+        chmod(TESTS_FOLDER."results/results.xml", 0777);
+        $this->output_junit(TESTS_FOLDER."results/results.xml");
     }
 
     public function output_junit($path) {

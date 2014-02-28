@@ -6,15 +6,12 @@ $_config_vars = array(
 "DBNAME"                  => "prails",
 "DBUSER"                  => "root",
 "DBPASSWORD"              => "root",
-"LIBRARY"                 => "/Library/WebServer/Documents/prails/",
-"ROOT"                    => "/Library/WebServer/Documents/prails/",
 "UPLOAD_FOLDER"           => "/Library/WebServer/Documents/prails/pictures/",
 "UPLOAD_URI"              => "/prails/pictures/",
 "SECURE"                  => false,
 "PICTURES_PATH"           => "/Library/WebServer/Documents/prails/pictures/",
 "PICTURES_URI"            => "/prails/pictures/",
 "LOGTYPE"                 => "local",
-"LOGFOLDER"               => "/Library/WebServer/Documents/prails/logs/",
 "DEBUG"                   => false,
 "VERBOSE"                 => false,
 "VISUALERRORS"            => false,
@@ -23,9 +20,6 @@ $_config_vars = array(
 "ADMINEMAIL"              => "info@prails.com",
 "DEFAULT_CONTROLLER"      => "prails",
 "DEFAULT_ACTION"          => "index",
-"LOG"                     => false,
-"MIGRATIONS_FOLDER"       => "/Library/WebServer/Documents/prails/db/migrations/",
-"AUTHENTICATION_VARIABLE" => "logged",
-"TESTS_FOLDER"            => "/Library/WebServer/Documents/prails/tests/",
-"LASTQUERY"               => "");
+"LOG"                     => false
+);
 ?>
