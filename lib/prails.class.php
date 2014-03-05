@@ -819,6 +819,26 @@ class prails extends context {
         }
         return $errors;
     }
+    
+    /**
+     * Serialized data to Json
+     * 
+     * @return string Json equivalent
+     */
+    public function ToJson($data) {
+        header('Content-type: application/json');
+        print json_encode($data);
+    }
+    
+    /**
+     * Serializes the current DataSet to Json
+     * 
+     * @return string Json equivalent of the Dataset
+     */
+    public function DataSetToJson() {
+        header('Content-type: application/json');
+        print json_encode($this->GetDataSet());
+    }
 
 }
 
