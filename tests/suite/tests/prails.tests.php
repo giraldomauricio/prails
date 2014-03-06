@@ -35,7 +35,6 @@ $token = $obj_to_test->Tokenize();
 $test->Assert($obj_to_test->ValidateToken($token),"Test token validation");
 $test->Assert(Utils::Enclose(1) == 1,"Test enclosing a number");
 $test->AssertEqual(Utils::Enclose("Aa"),"'Aa'","Test enclosing a string");
-$test->AssertEqual(Utils::Enclose("\""),"'&quot;'","Test enclosing with slashes");
 $_REQUEST["email"] = "foo";
 $_REQUEST["name"] = "bar";
 $_REQUEST["phone"] = "333A";

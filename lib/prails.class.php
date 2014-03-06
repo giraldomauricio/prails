@@ -124,7 +124,7 @@ class prails extends context {
      *
      * @var array
      */
-    var $_assets_priority = array();
+    var $_assets_priority = array("_jquery.js", "_jquery_tools.min.js", "jquery.jqplot.min.js");
 
     /**
      * Database name
@@ -327,20 +327,24 @@ class prails extends context {
             if ($view_name != "")
                 $this->_view = $view_name;
         }
+
         // User can render the default view or a specific view.
-        if ($layout_file != "" && file_exists($layout_file)) {
-            ob_start();
-            include $layout_file;
-            $this->_html = ob_get_contents();
-            ob_end_clean();
-            // Digest Prails specific tags:
-            $hidden_field = "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n";
-            $token = $this->Tokenize();
-            $hidden_token = "<input type=\"hidden\" id=\"PRAILS_TOKEN\" name=\"PRAILS_TOKEN\" value=\"" . $token . "\" />\n";
-            // Add prails tokens if nor present in forms
-            if (!strpos($this->_html, "PRAILS_POST") && !strpos($this->_html, "PRAILS_TOKEN"))
-                $this->_html = str_replace("</form>", $hidden_field . $hidden_token . "</form>\n", $this->_html);
+        if (!$layout_file != "" || !file_exists($layout_file)) {
+            $layout_file = ROOT . "app/views/" . $folder . "/" . $this->_controller . "/" . $this->_view . ".php";
         }
+
+        ob_start();
+        include $layout_file;
+        $this->_html = ob_get_contents();
+        ob_end_clean();
+
+        $hidden_field = "<input type=\"hidden\" id=\"PRAILS_POST\" name=\"PRAILS_POST\" value=\"TRUE\" />\n";
+        $token = $this->Tokenize();
+        $hidden_token = "<input type=\"hidden\" id=\"PRAILS_TOKEN\" name=\"PRAILS_TOKEN\" value=\"" . $token . "\" />\n";
+        // Add prails tokens if nor present in forms
+        if (!strpos($this->_html, "PRAILS_POST") && !strpos($this->_html, "PRAILS_TOKEN"))
+            $this->_html = str_replace("</form>", $hidden_field . $hidden_token . "</form>\n", $this->_html);
+
         if ($this->_cms)
             $this->RunCMS();
         print $this->_html;
@@ -748,16 +752,17 @@ class prails extends context {
         $lower_priority = array();
 
         if (count($this->_assets_priority) > 0) {
-            
+
             foreach ($this->_assets_priority as $priority_asset) {
-                if(isset($this->_assets[$priority_asset])) array_push($high_priority, $this->_assets[$priority_asset]);
+                if (isset($this->_assets[$priority_asset]))
+                    array_push($high_priority, $this->_assets[$priority_asset]);
             }
-            
-            
-            
+
+
+
             $lower_priority = array_diff($this->_assets, $high_priority);
-            
-            
+
+
             $prioritized_assets = array_merge($high_priority, $lower_priority);
             $this->_assets = $prioritized_assets;
         }
@@ -813,6 +818,26 @@ class prails extends context {
                 $errors .= "&raquo;" . $error->message . ":" . $error->detail . "<br/>";
         }
         return $errors;
+    }
+    
+    /**
+     * Serialized data to Json
+     * 
+     * @return string Json equivalent
+     */
+    public function ToJson($data) {
+        header('Content-type: application/json');
+        print json_encode($data);
+    }
+    
+    /**
+     * Serializes the current DataSet to Json
+     * 
+     * @return string Json equivalent of the Dataset
+     */
+    public function DataSetToJson() {
+        header('Content-type: application/json');
+        print json_encode($this->GetDataSet());
     }
 
 }

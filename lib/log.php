@@ -2,7 +2,7 @@
 
 class logFactory {
 
-    function checkSize($file)
+    static function checkSize($file)
     {
         // By default 1 Kbyte
         $maxSize = 10485760;
@@ -10,6 +10,11 @@ class logFactory {
         {
             rename($file,$file.".".date("YmdhIs"));
         }
+    }
+    
+    static function healthCheck($file)
+    {
+        chmod(LOGFOLDER, 0777);
     }
     
     public function storm($type, $message, $file = "Unknown", $detail = "Unknown", $line="Unknown", $server = "PROD", $class="")

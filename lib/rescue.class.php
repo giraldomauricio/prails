@@ -47,11 +47,6 @@ class rescue {
     print "<div style=\"color:red\"><strong>Prails Private View</strong></div><hr />View requires authentication</i>.";
   }
   
-  public static function ViewAlreadyExists()
-  {
-    print "<div style=\"color:red\"><strong>Prails Scaffold Error</strong></div><hr />View already exists</i>.";
-  }
-  
 }
 
 ?>

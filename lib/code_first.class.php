@@ -36,6 +36,7 @@ class CodeFirst extends context {
   }
 
   public function GetTableInfo() {
+    $base_value = "";
     $this->_table = $this->_model->_table;
     $this->_key = $this->_model->_key;
     $base = new prails();

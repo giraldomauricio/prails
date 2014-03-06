@@ -97,6 +97,23 @@ class PrailsHtmlControls {
     $res .="<input type=\"date\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" value=\"" . $value . "\"/>\n";
     return $res;
   }
+  
+  /**
+   * Renders an Input Field
+   *
+   * @return string the Rendered TextField
+   */
+  public function FileField($field, $label = "", $class = "") {
+    if ($label == "")
+      $label = $field;
+    if ($class == "")
+      $class = $this->class;
+    $value = $this->object->$field;
+    $res = "";
+    $res .="<label for=\"" . $field . "\">" . $label . "</label>\n";
+    $res .="<input type=\"file\" name=\"" . $field . "\" id=\"" . $field . "\" class=\"" . $class . "\" />\n".$value;
+    return $res;
+  }
 
   /**
    * Renders a Drop Down
