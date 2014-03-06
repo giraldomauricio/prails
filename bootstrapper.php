@@ -33,6 +33,21 @@ try
   rescue::NoConfigurationAvailable();
 }
 
+// Base variables
+
+
+
+define("ROOT", __DIR__);
+define("LIBRARY", __DIR__);
+define("LOGFOLDER", __DIR__."/logs/");
+define("MIGRATIONS_FOLDER", __DIR__."/db/migrations/");
+define("TESTS_FOLDER", __DIR__."/tests/");
+define("LAST_QUERY", "");
+define("AUTHENTICATION_VARIABLE", "logged");
+
+
+// User variables
+
 foreach ($_config_vars as $_config_var => $_config_val) {
   define($_config_var, $_config_val);
 }
@@ -51,8 +66,9 @@ if(isset($_SERVER['HTTPS']))
 // Load all classes
 
 // Load database driver
-require_once LIBRARY . "lib/Prails_iDB.interface.php";
-$db_driver_location = LIBRARY."db/drivers/prails_".DBTYPE.".class.php";
+require_once LIBRARY . "/lib/Prails_iDB.interface.php";
+$db_driver_location = LIBRARY."/db/drivers/prails_".DBTYPE.".class.php";
+
 if(file_exists($db_driver_location))
 {
   require_once $db_driver_location;
@@ -64,12 +80,12 @@ else{
 
 // Load base classes
 
-require_once LIBRARY . "lib/context.class.php";
-require_once LIBRARY . "lib/prails.class.php";
-require_once LIBRARY . "lib/log.php";
-require_once LIBRARY . "lib/utils.class.php";
+require_once LIBRARY . "/lib/context.class.php";
+require_once LIBRARY . "/lib/prails.class.php";
+require_once LIBRARY . "/lib/log.php";
+require_once LIBRARY . "/lib/utils.class.php";
 
-$architecture = array("lib", "app/models", "app/controllers");
+$architecture = array("/lib", "/app/models", "/app/controllers");
 
 
 
