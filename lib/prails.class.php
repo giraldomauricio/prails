@@ -195,6 +195,14 @@ class prails extends context {
      * @var Int
      */
     var $max_dataset_size = 1000;
+    
+    /**
+     * Edition mode. If logical, no records are deleted, instead they are inserted and updated.
+     * Affects the methods that Delete and Update records.
+     *
+     * @var Int
+     */
+    var $edition_mode = PrailsConstants::prails_delete_mode;
 
     /**
      * Index is the default main action when no Controller is declared.
