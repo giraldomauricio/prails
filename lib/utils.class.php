@@ -251,9 +251,8 @@ class Utils {
         array_push($this->hours, sprintf("%02d", $i - 12) . ":00 PM");
     }
   }
-  
-  public static function GetWeekDay($day)
-  {
+
+  public static function GetWeekDay($day) {
     $daysByNumber = array("1" => "Monday", "2" => "Tuesday", "3" => "Wednesday", "4" => "Thursday", "5" => "Friday", "6" => "Saturday", "7" => "Sunday");
     return $daysByNumber[$day];
   }
@@ -280,7 +279,7 @@ class Utils {
     }
     print $this->dropdown($id, $this->yearsPastFuture, $selected);
   }
-  
+
   function renderDaysOfWeekByNumber($id, $selected = 0) {
     print $this->dropdown($id, $this->daysByNumber, $selected);
   }
@@ -389,10 +388,12 @@ class Utils {
     return $result;
   }
 
-  public static function Money($number,$currency=true) {
+  public static function Money($number, $currency=true) {
     // This function converts numbers in money format
-    if($currency) return "$" . number_format($number, 2);
-    else return number_format($number, 2);
+    if ($currency)
+      return "$" . number_format($number, 2);
+    else
+      return number_format($number, 2);
   }
 
   public static function GUID() {
@@ -402,12 +403,10 @@ class Utils {
 
     return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
   }
-  
-  public static function ParseDelta($delta)
-  {
+
+  public static function ParseDelta($delta) {
     $result = array();
-    if(strpos($delta, ":"))
-    {
+    if (strpos($delta, ":")) {
       $delta_array = explode(",", $delta);
       foreach ($delta_array as $pair) {
         $key_value = explode(":", $pair);
@@ -416,11 +415,9 @@ class Utils {
     }
     return $result;
   }
-  
-  public static function Inspect($var)
-  {
-    if(!is_array($var))
-    {
+
+  public static function Inspect($var) {
+    if (!is_array($var)) {
       $var = explode(",", $var);
     }
     foreach ($var as $value) {
@@ -428,7 +425,7 @@ class Utils {
       print "\n";
     }
   }
-  
+
   public static function Enclose($data) {
     if (is_numeric($data))
       return $data;
@@ -436,23 +433,28 @@ class Utils {
       return "'" . addslashes($data) . "'";
     }
   }
-  
-  public static function DeleteDirectory($dir) {
-        $it = new RecursiveDirectoryIterator($dir);
-        $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($files as $file) {
-            if ($file->getFilename() === '.' || $file->getFilename() === '..') {
-                continue;
-            }
-            if ($file->isDir()) {
-                rmdir($file->getRealPath());
-            } else {
-                unlink($file->getRealPath());
-            }
-        }
-        rmdir($dir);
-    }
 
+  public static function DeleteDirectory($dir) {
+    $it = new RecursiveDirectoryIterator($dir);
+    $files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+    foreach ($files as $file) {
+      if ($file->getFilename() === '.' || $file->getFilename() === '..') {
+        continue;
+      }
+      if ($file->isDir()) {
+        rmdir($file->getRealPath());
+      } else {
+        unlink($file->getRealPath());
+      }
+    }
+    rmdir($dir);
+  }
+
+  public static function GetRealClassVariables($object)
+  {
+    return array_diff_assoc(get_object_vars($object), get_class_vars("prails"));
+  }
+  
 }
 
 ?>

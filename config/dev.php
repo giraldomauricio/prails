@@ -1,7 +1,7 @@
 <?php
 $_config_vars = array(
   "URI"                     => "http://localhost/",
-  "DBTYPE"                  => "mysqli",
+  "DBTYPE"                  => "mysql",
   "DBSERVER"                => "127.0.0.1",
   "DBNAME"                  => "prails",
   "DBUSER"                  => "root",
